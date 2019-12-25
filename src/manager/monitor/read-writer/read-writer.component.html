@@ -1,0 +1,23 @@
+<div class="main-list">
+    <div class="row" style="margin-top: 10px;" *ngIf="dataNodes.length==0">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1 style="text-align: center;"> 当前没有实时读写数据</h1>
+
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 10px;">
+        <ng-template ngFor let-item [ngForOf]="dataNodes">
+
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">{{item.time}}</h4>
+
+                <p style=display:inline-block;word-wrap:break-word;white-space:normal;>
+                    {{item.text}}
+                </p>
+
+            </div>
+        </ng-template>
+    </div>
+</div>

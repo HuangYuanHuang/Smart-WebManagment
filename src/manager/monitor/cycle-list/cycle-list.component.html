@@ -1,0 +1,62 @@
+<div class="main-list">
+    <div class="row">
+        <mat-chip-list aria-label="Fish selection">
+
+            <ng-template ngFor let-item [ngForOf]="cycleNodes">
+                <mat-chip color="{{item.getColor()}}" (click)="groupClick(item)" [selected]="item.isActive">
+                    {{item.groupName}}
+                </mat-chip>
+
+            </ng-template>
+        </mat-chip-list>
+    </div>
+    <div class="row" *ngIf="cycleDataNodes.length>0" style="margin-top: 10px;">
+        <div class="table-responsive" style="max-height:600px;overflow-y: auto;">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Kind</th>
+                        <th scope="col">Reader</th>
+                        <th scope="col">Decompilers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-template ngFor let-item [ngForOf]="cycleDataNodes">
+                        <tr>
+                            <td>{{item.kind}}</td>
+                            <td>
+                                <ng-template ngFor let-d [ngForOf]="getReaders(item)">
+                                    <div class="label label-success text-wrap">
+                                        {{getString(d)}}
+                                    </div>
+                                </ng-template>
+
+                            </td>
+                            <td>
+
+                                <ng-template ngFor let-d [ngForOf]="getWriter(item)">
+                                    <p>
+                                        <span class="label label-default text-wrap">
+                                            {{getString(d)}}
+                                        </span>
+                                    </p>
+
+                                </ng-template>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-top: 10px;" *ngIf="cycleNodes.length==0">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1 style="text-align: center;"> 当前没有CNC数据轮询请求</h1>
+
+            </div>
+        </div>
+    </div>
+</div>

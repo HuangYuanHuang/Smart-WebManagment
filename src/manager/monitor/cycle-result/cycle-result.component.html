@@ -1,0 +1,59 @@
+<div class="main-list">
+    <div class="row">
+        <div class="col-md-3" style="max-height: 600px; overflow-y: auto;overflow-x: hidden;">
+            <mat-selection-list #shoes>
+                <mat-list-option *ngFor="let item of dataNodes" (click)="nodeClick(item)">
+                    <p>
+                        {{item.fullNameSpace}} <span class="label label-success">
+                            {{item.nodes.length}}
+                        </span>
+                    </p>
+
+
+                </mat-list-option>
+            </mat-selection-list>
+        </div>
+        <div class="col-md-9" style="max-height: 600px;overflow-y: auto;overflow-x: hidden;">
+            <ng-template ngFor let-item [ngForOf]="dataNodes">
+
+                <div *ngIf="item.isActive" style="width: 48%;float: left;margin-left: 5px;">
+                    <div class="alert alert-info" role="alert">
+                        <p>
+                            <strong style="font-size: 15px;">{{item.fullNameSpace}}</strong>
+                            <strong style="float:right;color: red;">{{item.time}}</strong>
+
+                        </p>
+                        <hr />
+                        <ng-template ngFor let-d [ngForOf]="item.nodes">
+                            <p>
+                                <span class="label label-default"
+                                    style="display:inline-block;word-wrap:break-word;white-space:normal;">
+                                    {{getString(d)}}
+                                </span>
+                            </p>
+
+                        </ng-template>
+
+
+                    </div>
+                </div>
+            </ng-template>
+
+            <div class="jumbotron" *ngIf="dataNodes.length>0&&!getIsActive()">
+                <h1 style="text-align: center;"> 请选择需要查看的数据模型</h1>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row" style="margin-top: 10px;" *ngIf="dataNodes.length==0">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1 style="text-align: center;"> 当前没有数据轮询结果</h1>
+
+            </div>
+        </div>
+    </div>
+</div>

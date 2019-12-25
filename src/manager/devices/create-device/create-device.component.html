@@ -1,0 +1,49 @@
+<form autocomplete="off" #createRoleForm="ngForm" (ngSubmit)="save()">
+    <h1 mat-dialog-title>{{ "CreateMachinePart" | localize }}</h1>
+    <mat-dialog-content style="width:800px;height:500px;">
+
+        <div class="row-fluid">
+            <div class="col-md-12">
+                <mat-form-field>
+                    <input matInput name="Name" [placeholder]="'Name' | localize" [(ngModel)]="machine.name" required
+                        minlength="2" maxlength="32" />
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput name="deviceId" [placeholder]="'deviceId' | localize" [(ngModel)]="machine.deviceId"
+                        required minlength="2" maxlength="32" />
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput name="specification" [placeholder]="'specification' | localize"
+                        [(ngModel)]="machine.specification" required minlength="2" maxlength="32" />
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput name="position" [placeholder]="'position' | localize" [(ngModel)]="machine.position"
+                        required minlength="2" maxlength="32" />
+                </mat-form-field>
+                <mat-form-field>
+                    <textarea matInput name="Description" [placeholder]="'description' | localize"
+                        [(ngModel)]="machine.description"></textarea>
+                </mat-form-field>
+                <div style="display: none;">
+                    <mat-form-field>
+                        <input matInput name="path" [placeholder]="'path' | localize" [(ngModel)]="machine.path"
+                            required />
+                    </mat-form-field>
+                </div>
+
+                <input type="file" name="image" ng2FileSelect [uploader]="uploader"
+                    (onFileSelected)="onFileSelected()" />
+
+            </div>
+        </div>
+    </mat-dialog-content>
+    <div mat-dialog-actions align="end">
+        <button mat-button type="button" [disabled]="saving" (click)="close(false)">
+            {{ "Cancel" | localize }}
+        </button>
+        <button mat-flat-button type="submit" flex="15" color="primary"
+            [disabled]="!createRoleForm.form.valid || saving">
+            {{ "Save" | localize }}
+        </button>
+    </div>
+</form>

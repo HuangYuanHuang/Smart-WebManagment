@@ -1,0 +1,10 @@
+.main-list {
+  min-height: 400px;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
