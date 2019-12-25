@@ -21,16 +21,20 @@
             <div class="body table-responsive">
                 <!--query start-->
                 <div class="row clearfix">
-                    <form>
-                        <mat-form-field>
-                            <input matInput [placeholder]="l('Filter')" [(ngModel)]="keyword" name="keyword">
-                        </mat-form-field>
+                    <form class="p-l-15">
+
 
                         <div class="row">
-                            <div class="col-md-12 text-right p-r-25">
-                                <button mat-raised-button color="primary"
+                            <div class="col-md-8">
+                                <mat-form-field>
+                                    <input matInput [placeholder]="l('Filter')" [(ngModel)]="keyword" name="keyword">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 text-left p-l-25">
+                                <button mat-raised-button color="primary" 
                                     (click)="getDataPage(1)">{{ 'Search' | localize }}</button>
                             </div>
+
                         </div>
                     </form>
                 </div>

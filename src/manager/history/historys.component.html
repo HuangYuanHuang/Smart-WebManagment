@@ -21,27 +21,42 @@
             <div class="body table-responsive">
                 <!--query start-->
                 <div class="row clearfix">
-                    <form>
+                    <form class="p-l-25">
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <mat-form-field>
-                                    <input matInput [placeholder]="l('Module')" [(ngModel)]="keyword" name="keyword">
+                                    <input matInput [placeholder]="l('Module')" [(ngModel)]="query.module"
+                                        name="keyword">
                                 </mat-form-field>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <mat-form-field>
-                                    <input matInput [matDatepicker]="dp3" placeholder="CreationTime" readonly>
+                                    <input matInput [matDatepicker]="dp3" (dateChange)="dateChange($event)"
+                                        placeholder="CreationTime" >
                                     <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                                     <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                                 </mat-form-field>
                             </div>
-                            <div class="col-md-12 text-right p-r-25">
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <input matInput [placeholder]="l('Page')" [(ngModel)]="query.page" name="page">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <input matInput [placeholder]="l('Method')" [(ngModel)]="query.method"
+                                        name="method">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 text-left p-l-25">
                                 <button mat-raised-button color="primary"
                                     (click)="getDataPage(1)">{{ 'Search' | localize }}</button>
                             </div>
                         </div>
-
                     </form>
                 </div>
                 <!--query end-->
