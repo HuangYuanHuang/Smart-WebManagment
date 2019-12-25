@@ -3010,17 +3010,37 @@ export class OperationLogServiceProxy {
     }
 
     /**
-     * @param keyword (optional) 
+     * @param module (optional) 
+     * @param page (optional) 
+     * @param method (optional) 
+     * @param date (optional) 
+     * @param userId (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<OperationLogDtoPagedResultDto> {
+    getAll(module: string | undefined, page: string | undefined, method: string | undefined, date: string | undefined, userId: number | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<OperationLogDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/OperationLog/GetAll?";
-        if (keyword === null)
-            throw new Error("The parameter 'keyword' cannot be null.");
-        else if (keyword !== undefined)
-            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&"; 
+        if (module === null)
+            throw new Error("The parameter 'module' cannot be null.");
+        else if (module !== undefined)
+            url_ += "Module=" + encodeURIComponent("" + module) + "&"; 
+        if (page === null)
+            throw new Error("The parameter 'page' cannot be null.");
+        else if (page !== undefined)
+            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+        if (method === null)
+            throw new Error("The parameter 'method' cannot be null.");
+        else if (method !== undefined)
+            url_ += "Method=" + encodeURIComponent("" + method) + "&"; 
+        if (date === null)
+            throw new Error("The parameter 'date' cannot be null.");
+        else if (date !== undefined)
+            url_ += "Date=" + encodeURIComponent("" + date) + "&"; 
+        if (userId === null)
+            throw new Error("The parameter 'userId' cannot be null.");
+        else if (userId !== undefined)
+            url_ += "UserId=" + encodeURIComponent("" + userId) + "&"; 
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
