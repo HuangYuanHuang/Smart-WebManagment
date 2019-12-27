@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
@@ -9,10 +9,10 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 export class SlopeLibraryComponent implements OnInit {
 
   displayedColumns: string[] = ['machiningKindName', 'materialThickness', 'materialName', 'nozzleKindName',
-    'eNo', 'nozzleDiameter', 'feedrate', 
+    'eNo', 'nozzleDiameter', 'feedrate',
     'power', 'frequency', 'duty', 'standardDisplacement',
-     'supple', 'edgeSlt', 'apprSlt',
-    'pwrCtrl', 'standardDisplacement2', 'gapAxis', 
+    'supple', 'edgeSlt', 'apprSlt',
+    'pwrCtrl', 'standardDisplacement2', 'gapAxis',
     'beamSpot', 'focalPosition', 'liftDistance', 'pbPower'];
   dataSource = new MatTableDataSource([]);
 

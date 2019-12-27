@@ -60,7 +60,7 @@ import { ListLibraryComponent } from './library/history-library/list-library/lis
     SlopeLibraryComponent,
     CurrentLibraryComponent,
     CreateLibraryComponent,
-    ListLibraryComponent,
+    ListLibraryComponent
   ],
   providers: [SignalrServcieProxyService],
 
@@ -86,7 +86,9 @@ import { ListLibraryComponent } from './library/history-library/list-library/lis
     EditProductComponent,
 
     CreateDeviceComponent,
-    EditDeviceComponent
+    EditDeviceComponent,
+    CreateLibraryComponent,
+    ListLibraryComponent
   ]
 })
 export class ManagerModule { }

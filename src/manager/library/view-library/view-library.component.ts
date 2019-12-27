@@ -1,9 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { MaterialServiceProxy, MeterialGroupThicknessDto, ThicknessItem } from '@shared/service-proxies/service-proxies';
 import { LibraryServiceProxy } from './library-proxy';
 import { MatSelectChange } from '@angular/material';
 import * as _ from 'lodash';
 import { CuttingLibraryComponent } from './cutting-library/cutting-library.component';
+import { PiercingLibraryComponent } from './piercing-library/piercing-library.component';
+import { EdgeLibraryComponent } from './edge-library/edge-library.component';
+import { SlopeLibraryComponent } from './slope-library/slope-library.component';
 
 @Component({
   selector: 'app-view-library',
@@ -12,7 +15,14 @@ import { CuttingLibraryComponent } from './cutting-library/cutting-library.compo
 })
 export class ViewLibraryComponent implements OnInit {
   @ViewChild('cuttinglibrary', { static: true }) cuttinglibrary: CuttingLibraryComponent;
+  @ViewChild('piercinglibrary', { static: true }) piercinglibrary: PiercingLibraryComponent;
+  @ViewChild('edgelibrary', { static: true }) edgelibrary: EdgeLibraryComponent;
+  @ViewChild('slopelibrary', { static: true }) slopelibrary: SlopeLibraryComponent;
 
+  @Input('icon') icon = 'add';
+  @Input('title') title = '备份';
+
+  @Output() libraryEvent: EventEmitter<any> = new EventEmitter<any>();
   private thickness: ThicknessItem[];
   private serviceProxy: LibraryServiceProxy;
   private selectedMeterial;
@@ -24,9 +34,10 @@ export class ViewLibraryComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
   }
-
+  opeartionClick() {
+    this.libraryEvent.emit('');
+  }
   ShowData(proxy: LibraryServiceProxy, commit: string) {
     this.commit = commit;
     this.serviceProxy = proxy;
@@ -56,6 +67,15 @@ export class ViewLibraryComponent implements OnInit {
       const id = find[0].id;
       this.serviceProxy.getCuttingAll(id, this.commit, this.skipCount, this.maxCount).subscribe(item => {
         this.cuttinglibrary.show(item.items);
+      });
+      this.serviceProxy.getEdgeAll(this.commit, id, this.skipCount, this.maxCount).subscribe(item => {
+        this.edgelibrary.show(item.items);
+      });
+      this.serviceProxy.getPiercingAll(this.commit, id, this.skipCount, this.maxCount).subscribe(item => {
+        this.piercinglibrary.show(item.items);
+      });
+      this.serviceProxy.getSlopeAll(this.commit, id, this.skipCount, this.maxCount).subscribe(item => {
+        this.slopelibrary.show(item.items);
       })
     }
   }

@@ -2,17 +2,26 @@
 
     <ng-container matColumnDef="machiningKindName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> 加工类型 </th>
-        <td mat-cell *matCellDef="let element"> {{element.machiningKindName}} </td>
+        <td mat-cell *matCellDef="let element">
+            <span class="label label-primary"> {{element.machiningKindName}}</span>
+
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="materialThickness">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> 材料厚度 </th>
-        <td mat-cell *matCellDef="let element"> {{element.materialThickness}} </td>
+        <td mat-cell *matCellDef="let element">
+            <span class="label label-info"> {{element.materialThickness}}</span>
+
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="materialName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> 材料类型 </th>
-        <td mat-cell *matCellDef="let element"> {{element.materialName}} </td>
+        <td mat-cell *matCellDef="let element">
+            <span class="label label-success"> {{element.materialName}}</span>
+
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="gasName">

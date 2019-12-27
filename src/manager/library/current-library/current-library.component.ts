@@ -9,6 +9,8 @@ import {
   CuttingDataDtoPagedResultDto, EdgeCuttingDataDtoPagedResultDto, PiercingDataDtoPagedResultDto, SlopeControlDataDtoPagedResultDto
 } from '@shared/service-proxies/service-proxies';
 import { ViewLibraryComponent } from '../view-library/view-library.component';
+import { MatDialog } from '@angular/material';
+import { CreateLibraryComponent } from './create-library/create-library.component';
 
 @Component({
   selector: 'app-current-library',
@@ -24,7 +26,9 @@ export class CurrentLibraryComponent implements OnInit, LibraryServiceProxy {
     private cuttingDataProxy: CuttingDataServiceProxy,
     private edgeDataProxy: EdgeCuttingDataServiceProxy,
     private piercingProxy: PiercingDataServiceProxy,
-    private slopeProxy: SlopeControlDataServiceProxy
+    private slopeProxy: SlopeControlDataServiceProxy,
+    private _dialog: MatDialog
+
   ) { }
 
   ngOnInit() {
@@ -32,6 +36,11 @@ export class CurrentLibraryComponent implements OnInit, LibraryServiceProxy {
   }
   refresh() {
     this.viewLibrary.ShowData(this, '');
+
+  }
+  libraryEvent(obj: any) {
+    this._dialog.open(CreateLibraryComponent, {
+    });
   }
   getMaterialAll(isCheckSon: boolean, commitId: string, skipCount: number, maxResultCount: number)
     : Observable<MeterialGroupThicknessDtoPagedResultDto> {

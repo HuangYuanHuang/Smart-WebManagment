@@ -20,7 +20,7 @@
             </div>
             <div class="body table-responsive">
 
-                <app-view-library #viewlibrary></app-view-library>
+                <app-view-library #viewlibrary (libraryEvent)="libraryEvent($event)"></app-view-library>
             </div>
         </div>
     </div>
