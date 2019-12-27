@@ -1,1 +1,107 @@
-<p>piercing-library works!</p>
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <ng-container matColumnDef="machiningKindName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 加工类型 </th>
+        <td mat-cell *matCellDef="let element"> {{element.machiningKindName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="materialThickness">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 材料厚度 </th>
+        <td mat-cell *matCellDef="let element"> {{element.materialThickness}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="materialName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 材料类型 </th>
+        <td mat-cell *matCellDef="let element"> {{element.materialName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="gasName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 辅助气体种类 </th>
+        <td mat-cell *matCellDef="let element"> {{element.gasName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nozzleKindName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 割嘴类型 </th>
+        <td mat-cell *matCellDef="let element"> {{element.nozzleKindName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="eNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> E编号 </th>
+        <td mat-cell *matCellDef="let element"> {{element.eNo}} </td>
+    </ng-container>
+    <ng-container matColumnDef="nozzleDiameter">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 割嘴内径 </th>
+        <td mat-cell *matCellDef="let element"> {{element.nozzleDiameter}} </td>
+    </ng-container>
+    <ng-container matColumnDef="power">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 功率 </th>
+        <td mat-cell *matCellDef="let element"> {{element.power}} </td>
+    </ng-container>
+    <ng-container matColumnDef="frequency">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 频率 </th>
+        <td mat-cell *matCellDef="let element"> {{element.frequency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="duty">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 占空比 </th>
+        <td mat-cell *matCellDef="let element"> {{element.duty}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="stepFrequency">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 步进频率 </th>
+        <td mat-cell *matCellDef="let element"> {{element.stepFrequency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="stepDuty">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 步进占空比 </th>
+        <td mat-cell *matCellDef="let element"> {{element.stepDuty}} </td>
+    </ng-container>
+    <ng-container matColumnDef="stepTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 步进时间 </th>
+        <td mat-cell *matCellDef="let element"> {{element.stepTime}} </td>
+    </ng-container>
+    <ng-container matColumnDef="stepQuantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 步进次数 </th>
+        <td mat-cell *matCellDef="let element"> {{element.stepQuantity}} </td>
+    </ng-container>
+    <ng-container matColumnDef="piercingTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 穿孔时间 </th>
+        <td mat-cell *matCellDef="let element"> {{element.piercingTime}} </td>
+    </ng-container>
+    <ng-container matColumnDef="gasPressure">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 辅助气体压力 </th>
+        <td mat-cell *matCellDef="let element"> {{element.gasPressure}} </td>
+    </ng-container>
+    <ng-container matColumnDef="gasSettingTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 辅助气体时间 </th>
+        <td mat-cell *matCellDef="let element"> {{element.gasSettingTime}} </td>
+    </ng-container>
+    <ng-container matColumnDef="standardDisplacement">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 基准偏移量 </th>
+        <td mat-cell *matCellDef="let element"> {{element.standardDisplacement}} </td>
+    </ng-container>
+    <ng-container matColumnDef="standardDisplacement2">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 基准偏移量2 </th>
+        <td mat-cell *matCellDef="let element"> {{element.standardDisplacement2}} </td>
+    </ng-container>
+    <ng-container matColumnDef="gapAxis">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 间隙轴 </th>
+        <td mat-cell *matCellDef="let element"> {{element.gapAxis}} </td>
+    </ng-container>
+    <ng-container matColumnDef="beamSpot">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 焦斑直径 </th>
+        <td mat-cell *matCellDef="let element"> {{element.beamSpot}} </td>
+    </ng-container>
+    <ng-container matColumnDef="focalPosition">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 焦点位置 </th>
+        <td mat-cell *matCellDef="let element"> {{element.focalPosition}} </td>
+    </ng-container>
+    <ng-container matColumnDef="liftDistance">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 蛙跳高度 </th>
+        <td mat-cell *matCellDef="let element"> {{element.liftDistance}} </td>
+    </ng-container>
+    <ng-container matColumnDef="pbPower">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 谷底功率 </th>
+        <td mat-cell *matCellDef="let element"> {{element.pbPower}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

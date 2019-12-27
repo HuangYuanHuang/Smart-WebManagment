@@ -23,7 +23,6 @@ export class CuttingLibraryComponent implements OnInit {
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.sort = this.sort;
   }
-
 }
 // ColumnArray.Add("ENo", new ColumnItemModel() { Title = "E编号", Key = "ENo" });
 // ColumnArray.Add("MachiningKindName", new ColumnItemModel() { Title = "加工类型", Key = "MachiningKindName", ItemEnum = ColumnItemTypeEnum.Combox, ValueConstraint = false, SelectPropName = "MachiningKindCode" });
