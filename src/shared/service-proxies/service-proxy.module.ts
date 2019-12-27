@@ -16,6 +16,19 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.ProductInfoServiceProxy,
         ApiServiceProxies.MachinePartServiceProxy,
         ApiServiceProxies.OperationLogServiceProxy,
+        ApiServiceProxies.LibraryHistoryServiceProxy,
+        ApiServiceProxies.MaterialBackupServiceProxy,
+        ApiServiceProxies.MaterialServiceProxy,
+
+        ApiServiceProxies.CuttingDataBackupServiceProxy,
+        ApiServiceProxies.CuttingDataServiceProxy,
+        ApiServiceProxies.EdgeCuttingDataBackupServiceProxy,
+        ApiServiceProxies.EdgeCuttingDataServiceProxy,
+        ApiServiceProxies.PiercingDataBackupServiceProxy,
+        ApiServiceProxies.PiercingDataServiceProxy,
+        ApiServiceProxies.SlopeControlDataBackupServiceProxy,
+        ApiServiceProxies.SlopeControlDataServiceProxy,
+
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })

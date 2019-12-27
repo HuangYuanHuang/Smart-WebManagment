@@ -24,6 +24,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ManagerRoutingModule } from './manager-routing.module';
 import { HistorysComponent } from './history/historys.component';
 import { AppLayoutModule } from 'layout/layout.module';
+import { HistoryLibraryComponent } from './library/history-library/history-library.component';
+import { ViewLibraryComponent } from './library/view-library/view-library.component';
+import { CuttingLibraryComponent } from './library/view-library/cutting-library/cutting-library.component';
+import { EdgeLibraryComponent } from './library/view-library/edge-library/edge-library.component';
+import { PiercingLibraryComponent } from './library/view-library/piercing-library/piercing-library.component';
+import { SlopeLibraryComponent } from './library/view-library/slope-library/slope-library.component';
+import { CurrentLibraryComponent } from './library/current-library/current-library.component';
 
 
 @NgModule({
@@ -43,6 +50,13 @@ import { AppLayoutModule } from 'layout/layout.module';
     EditDeviceComponent,
 
     HistorysComponent,
+    HistoryLibraryComponent,
+    ViewLibraryComponent,
+    CuttingLibraryComponent,
+    EdgeLibraryComponent,
+    PiercingLibraryComponent,
+    SlopeLibraryComponent,
+    CurrentLibraryComponent,
   ],
   providers: [SignalrServcieProxyService],
 

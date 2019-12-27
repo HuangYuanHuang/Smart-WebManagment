@@ -18,6 +18,9 @@ export class SideBarNavComponent extends AppComponentBase {
         new MenuItem(this.l('Devices'), '', 'assignment', '/le/device'),
         new MenuItem(this.l('Products'), '', 'bookmarks', '/le/product'),
 
+        new MenuItem(this.l('Library'), '', 'line_weight', '/le/library'),
+        new MenuItem(this.l('Record'), '', 'history', '/le/library-record'),
+
         new MenuItem(this.l('Historys'), '', 'storage', '/le/history'),
 
         new MenuItem(this.l('Monitor'), '', 'info', '/le/monitor'),

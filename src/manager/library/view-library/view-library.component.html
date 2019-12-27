@@ -1,0 +1,43 @@
+<div class="div-tab">
+    <mat-tab-group>
+        <mat-tab label="切割">
+            <app-cutting-library #cuttinglibrary></app-cutting-library>
+        </mat-tab>
+        <mat-tab label="穿孔">
+            <app-piercing-library #piercinglibrary></app-piercing-library>
+        </mat-tab>
+        <mat-tab label="交角切割">
+            <app-edge-library #edgelibrary></app-edge-library>
+        </mat-tab>
+        <mat-tab label="功率控制">
+            <app-slope-library #slopelibrary></app-slope-library>
+        </mat-tab>
+
+    </mat-tab-group>
+</div>
+
+<div class="footer">
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-select [(value)]="selectedMeterial" placeholder="材料类型" (selectionChange)="materialChange($event)">
+                    <mat-option *ngFor="let node of meterialNodes" [value]="node.code">
+                        {{node.name_CN}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-select  [(value)]="selectedThickness"  placeholder="材料厚度" (selectionChange)="thicknessChange($event)">
+                    <mat-option *ngFor="let node of thickness" [value]="node.id">
+                        {{node.thickness}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+    </div>
+
+</div>
