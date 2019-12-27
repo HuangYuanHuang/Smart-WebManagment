@@ -1,3 +1,6 @@
 .div-tab{
-    height: 670px;
+    height: 660px;
+}
+.col-md-5{
+    margin-bottom: 0px !important;
 }

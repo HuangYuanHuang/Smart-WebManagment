@@ -31,6 +31,8 @@ import { EdgeLibraryComponent } from './library/view-library/edge-library/edge-l
 import { PiercingLibraryComponent } from './library/view-library/piercing-library/piercing-library.component';
 import { SlopeLibraryComponent } from './library/view-library/slope-library/slope-library.component';
 import { CurrentLibraryComponent } from './library/current-library/current-library.component';
+import { CreateLibraryComponent } from './library/current-library/create-library/create-library.component';
+import { ListLibraryComponent } from './library/history-library/list-library/list-library.component';
 
 
 @NgModule({
@@ -57,6 +59,8 @@ import { CurrentLibraryComponent } from './library/current-library/current-libra
     PiercingLibraryComponent,
     SlopeLibraryComponent,
     CurrentLibraryComponent,
+    CreateLibraryComponent,
+    ListLibraryComponent,
   ],
   providers: [SignalrServcieProxyService],
 

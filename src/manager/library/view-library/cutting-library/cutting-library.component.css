@@ -1,7 +1,14 @@
 table {
-    width: 100%;
+    /* width: 1800px; */
+    height: 600px;
+
   }
   
   th.mat-sort-header-sorted {
     color: black;
+  }
+    .example-container {
+    width: 1500px;
+
+    overflow: auto;
   }
