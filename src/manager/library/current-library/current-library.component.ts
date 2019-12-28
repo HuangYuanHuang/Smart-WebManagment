@@ -46,19 +46,19 @@ export class CurrentLibraryComponent implements OnInit, LibraryServiceProxy {
     : Observable<MeterialGroupThicknessDtoPagedResultDto> {
     return this.materialProxy.getMaterialAll(isCheckSon, commitId, skipCount, maxResultCount);
   }
-  getCuttingAll(machiningDataGroupId: number, commitId: string, skipCount: number, maxResultCount: number)
+  getCuttingAll(machiningDataGroupId: string, commitId: string, skipCount: number, maxResultCount: number)
     : Observable<CuttingDataDtoPagedResultDto> {
     return this.cuttingDataProxy.getAll(machiningDataGroupId, commitId, skipCount, maxResultCount);
   }
-  getEdgeAll(commitId: string, machiningDataGroupId: number, skipCount: number, maxResultCount: number)
+  getEdgeAll(commitId: string, machiningDataGroupId: string, skipCount: number, maxResultCount: number)
     : Observable<EdgeCuttingDataDtoPagedResultDto> {
     return this.edgeDataProxy.getAll(commitId, machiningDataGroupId, skipCount, maxResultCount);
   }
-  getPiercingAll(commitId: string, machiningDataGroupId: number, skipCount: number, maxResultCount: number)
+  getPiercingAll(commitId: string, machiningDataGroupId: string, skipCount: number, maxResultCount: number)
     : Observable<PiercingDataDtoPagedResultDto> {
     return this.piercingProxy.getAll(commitId, machiningDataGroupId, skipCount, maxResultCount);
   }
-  getSlopeAll(commitId: string, machiningDataGroupId: number, skipCount: number, maxResultCount: number)
+  getSlopeAll(commitId: string, machiningDataGroupId: string, skipCount: number, maxResultCount: number)
     : Observable<SlopeControlDataDtoPagedResultDto> {
     return this.slopeProxy.getAll(commitId, machiningDataGroupId, skipCount, maxResultCount);
 

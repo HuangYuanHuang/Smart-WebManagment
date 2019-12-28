@@ -278,7 +278,7 @@ export class CuttingDataServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(machiningDataGroupId: number | undefined, commitId: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<CuttingDataDtoPagedResultDto> {
+    getAll(machiningDataGroupId: string | undefined, commitId: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<CuttingDataDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/CuttingData/GetAll?";
         if (machiningDataGroupId === null)
             throw new Error("The parameter 'machiningDataGroupId' cannot be null.");
@@ -581,7 +581,7 @@ export class CuttingDataBackupServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(machiningDataGroupId: number | undefined, commitId: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<CuttingDataDtoPagedResultDto> {
+    getAll(machiningDataGroupId: string | undefined, commitId: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<CuttingDataDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/CuttingDataBackup/GetAll?";
         if (machiningDataGroupId === null)
             throw new Error("The parameter 'machiningDataGroupId' cannot be null.");
@@ -1187,7 +1187,7 @@ export class EdgeCuttingDataServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(commitId: string | undefined, machiningDataGroupId: number | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<EdgeCuttingDataDtoPagedResultDto> {
+    getAll(commitId: string | undefined, machiningDataGroupId: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<EdgeCuttingDataDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/EdgeCuttingData/GetAll?";
         if (commitId === null)
             throw new Error("The parameter 'commitId' cannot be null.");
@@ -1490,7 +1490,7 @@ export class EdgeCuttingDataBackupServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(commitId: string | undefined, machiningDataGroupId: number | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<EdgeCuttingDataDtoPagedResultDto> {
+    getAll(commitId: string | undefined, machiningDataGroupId: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<EdgeCuttingDataDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/EdgeCuttingDataBackup/GetAll?";
         if (commitId === null)
             throw new Error("The parameter 'commitId' cannot be null.");
@@ -5900,7 +5900,7 @@ export class PiercingDataServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(commitId: string | undefined, machiningDataGroupId: number | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PiercingDataDtoPagedResultDto> {
+    getAll(commitId: string | undefined, machiningDataGroupId: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PiercingDataDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/PiercingData/GetAll?";
         if (commitId === null)
             throw new Error("The parameter 'commitId' cannot be null.");
@@ -6203,7 +6203,7 @@ export class PiercingDataBackupServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(commitId: string | undefined, machiningDataGroupId: number | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PiercingDataDtoPagedResultDto> {
+    getAll(commitId: string | undefined, machiningDataGroupId: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PiercingDataDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/PiercingDataBackup/GetAll?";
         if (commitId === null)
             throw new Error("The parameter 'commitId' cannot be null.");
@@ -7687,7 +7687,7 @@ export class SlopeControlDataServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(commitId: string | undefined, machiningDataGroupId: number | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<SlopeControlDataDtoPagedResultDto> {
+    getAll(commitId: string | undefined, machiningDataGroupId: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<SlopeControlDataDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/SlopeControlData/GetAll?";
         if (commitId === null)
             throw new Error("The parameter 'commitId' cannot be null.");
@@ -7990,7 +7990,7 @@ export class SlopeControlDataBackupServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(commitId: string | undefined, machiningDataGroupId: number | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<SlopeControlDataDtoPagedResultDto> {
+    getAll(commitId: string | undefined, machiningDataGroupId: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<SlopeControlDataDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/SlopeControlDataBackup/GetAll?";
         if (commitId === null)
             throw new Error("The parameter 'commitId' cannot be null.");
@@ -9581,7 +9581,7 @@ export interface IChangeUiThemeInput {
 }
 
 export class UpdateCuttingDataDto implements IUpdateCuttingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     eNo: number;
     machiningKindCode: number;
     nozzleKindCode: number;
@@ -9689,7 +9689,7 @@ export class UpdateCuttingDataDto implements IUpdateCuttingDataDto {
 }
 
 export interface IUpdateCuttingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     eNo: number;
     machiningKindCode: number;
     nozzleKindCode: number;
@@ -9716,7 +9716,7 @@ export interface IUpdateCuttingDataDto {
 }
 
 export class CuttingDataDto implements ICuttingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     machiningKindName: string | undefined;
     materialThickness: number;
     materialName: string | undefined;
@@ -9839,7 +9839,7 @@ export class CuttingDataDto implements ICuttingDataDto {
 }
 
 export interface ICuttingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     machiningKindName: string | undefined;
     materialThickness: number;
     materialName: string | undefined;
@@ -9926,7 +9926,7 @@ export interface ICuttingDataDtoPagedResultDto {
 }
 
 export class CreateCuttingDataDto implements ICreateCuttingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
 
     constructor(data?: ICreateCuttingDataDto) {
         if (data) {
@@ -9965,7 +9965,7 @@ export class CreateCuttingDataDto implements ICreateCuttingDataDto {
 }
 
 export interface ICreateCuttingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
 }
 
 export class DepartmentDto implements IDepartmentDto {
@@ -10225,7 +10225,7 @@ export interface IUpdateDeppartmentDto {
 }
 
 export class UpdateEdgeCuttingDataDto implements IUpdateEdgeCuttingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     eNo: number;
     machiningKindCode: number;
     nozzleKindCode: number;
@@ -10330,7 +10330,7 @@ export class UpdateEdgeCuttingDataDto implements IUpdateEdgeCuttingDataDto {
 }
 
 export interface IUpdateEdgeCuttingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     eNo: number;
     machiningKindCode: number;
     nozzleKindCode: number;
@@ -10356,7 +10356,7 @@ export interface IUpdateEdgeCuttingDataDto {
 }
 
 export class EdgeCuttingDataDto implements IEdgeCuttingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     machiningKindName: string | undefined;
     materialThickness: number;
     materialName: string | undefined;
@@ -10476,7 +10476,7 @@ export class EdgeCuttingDataDto implements IEdgeCuttingDataDto {
 }
 
 export interface IEdgeCuttingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     machiningKindName: string | undefined;
     materialThickness: number;
     materialName: string | undefined;
@@ -11376,6 +11376,7 @@ export class MachiningGroupDto implements IMachiningGroupDto {
     materialCode: number;
     materialThickness: number;
     description: string | undefined;
+    groupId: string | undefined;
     creationTime: moment.Moment;
     id: number;
 
@@ -11394,6 +11395,7 @@ export class MachiningGroupDto implements IMachiningGroupDto {
             this.materialCode = _data["materialCode"];
             this.materialThickness = _data["materialThickness"];
             this.description = _data["description"];
+            this.groupId = _data["groupId"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
             this.id = _data["id"];
         }
@@ -11412,6 +11414,7 @@ export class MachiningGroupDto implements IMachiningGroupDto {
         data["materialCode"] = this.materialCode;
         data["materialThickness"] = this.materialThickness;
         data["description"] = this.description;
+        data["groupId"] = this.groupId;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["id"] = this.id;
         return data; 
@@ -11430,6 +11433,7 @@ export interface IMachiningGroupDto {
     materialCode: number;
     materialThickness: number;
     description: string | undefined;
+    groupId: string | undefined;
     creationTime: moment.Moment;
     id: number;
 }
@@ -11769,7 +11773,7 @@ export interface IUpdateMachiningKindDto {
 }
 
 export class ThicknessItem implements IThicknessItem {
-    id: number;
+    id: string | undefined;
     thickness: number;
 
     constructor(data?: IThicknessItem) {
@@ -11811,7 +11815,7 @@ export class ThicknessItem implements IThicknessItem {
 }
 
 export interface IThicknessItem {
-    id: number;
+    id: string | undefined;
     thickness: number;
 }
 
@@ -12805,7 +12809,7 @@ export interface IUpdatePiercingDataDto {
 }
 
 export class PiercingDataDto implements IPiercingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     machiningKindName: string | undefined;
     materialThickness: number;
     materialName: string | undefined;
@@ -12928,7 +12932,7 @@ export class PiercingDataDto implements IPiercingDataDto {
 }
 
 export interface IPiercingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     machiningKindName: string | undefined;
     materialThickness: number;
     materialName: string | undefined;
@@ -13015,7 +13019,7 @@ export interface IPiercingDataDtoPagedResultDto {
 }
 
 export class CreatePiercingDataDto implements ICreatePiercingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
 
     constructor(data?: ICreatePiercingDataDto) {
         if (data) {
@@ -13054,7 +13058,7 @@ export class CreatePiercingDataDto implements ICreatePiercingDataDto {
 }
 
 export interface ICreatePiercingDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
 }
 
 export class ProductInfoDto implements IProductInfoDto {
@@ -14596,7 +14600,7 @@ export interface IGetCurrentLoginInformationsOutput {
 }
 
 export class UpdateSlopeControlDataDto implements IUpdateSlopeControlDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     eNo: number;
     machiningKindCode: number;
     nozzleKindCode: number;
@@ -14704,7 +14708,7 @@ export class UpdateSlopeControlDataDto implements IUpdateSlopeControlDataDto {
 }
 
 export interface IUpdateSlopeControlDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     eNo: number;
     machiningKindCode: number;
     nozzleKindCode: number;
@@ -14731,7 +14735,7 @@ export interface IUpdateSlopeControlDataDto {
 }
 
 export class SlopeControlDataDto implements ISlopeControlDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     machiningKindName: string | undefined;
     materialThickness: number;
     materialName: string | undefined;
@@ -14842,7 +14846,7 @@ export class SlopeControlDataDto implements ISlopeControlDataDto {
 }
 
 export interface ISlopeControlDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
     machiningKindName: string | undefined;
     materialThickness: number;
     materialName: string | undefined;
@@ -14925,7 +14929,7 @@ export interface ISlopeControlDataDtoPagedResultDto {
 }
 
 export class CreateCSlopeControlDataDto implements ICreateCSlopeControlDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
 
     constructor(data?: ICreateCSlopeControlDataDto) {
         if (data) {
@@ -14964,7 +14968,7 @@ export class CreateCSlopeControlDataDto implements ICreateCSlopeControlDataDto {
 }
 
 export interface ICreateCSlopeControlDataDto {
-    machiningDataGroupId: number;
+    machiningDataGroupId: string | undefined;
 }
 
 export class CreateTenantDto implements ICreateTenantDto {

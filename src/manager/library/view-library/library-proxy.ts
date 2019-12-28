@@ -5,15 +5,15 @@ export interface LibraryServiceProxy {
     getMaterialAll(isCheckSon: boolean, commitId: string, skipCount: number, maxResultCount: number)
         : Observable<MeterialGroupThicknessDtoPagedResultDto>;
 
-    getCuttingAll(machiningDataGroupId: number, commitId: string, skipCount: number, maxResultCount: number)
+    getCuttingAll(machiningDataGroupId: string, commitId: string, skipCount: number, maxResultCount: number)
         : Observable<CuttingDataDtoPagedResultDto>;
 
-    getEdgeAll(commitId: string, machiningDataGroupId: number, skipCount: number, maxResultCount: number)
+    getEdgeAll(commitId: string, machiningDataGroupId: string, skipCount: number, maxResultCount: number)
         : Observable<EdgeCuttingDataDtoPagedResultDto>;
 
-    getPiercingAll(commitId: string, machiningDataGroupId: number, skipCount: number, maxResultCount: number)
+    getPiercingAll(commitId: string, machiningDataGroupId: string, skipCount: number, maxResultCount: number)
         : Observable<PiercingDataDtoPagedResultDto>;
 
-    getSlopeAll(commitId: string, machiningDataGroupId: number, skipCount: number, maxResultCount: number)
+    getSlopeAll(commitId: string, machiningDataGroupId: string, skipCount: number, maxResultCount: number)
         : Observable<SlopeControlDataDtoPagedResultDto>;
 }
