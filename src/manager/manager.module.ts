@@ -33,6 +33,7 @@ import { SlopeLibraryComponent } from './library/view-library/slope-library/slop
 import { CurrentLibraryComponent } from './library/current-library/current-library.component';
 import { CreateLibraryComponent } from './library/current-library/create-library/create-library.component';
 import { ListLibraryComponent } from './library/history-library/list-library/list-library.component';
+import { ImportLibraryComponent } from './library/history-library/import-library/import-library.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { ListLibraryComponent } from './library/history-library/list-library/lis
     SlopeLibraryComponent,
     CurrentLibraryComponent,
     CreateLibraryComponent,
-    ListLibraryComponent
+    ListLibraryComponent,
+    ImportLibraryComponent
   ],
   providers: [SignalrServcieProxyService],
 
@@ -88,7 +90,8 @@ import { ListLibraryComponent } from './library/history-library/list-library/lis
     CreateDeviceComponent,
     EditDeviceComponent,
     CreateLibraryComponent,
-    ListLibraryComponent
+    ListLibraryComponent,
+    ImportLibraryComponent
   ]
 })
 export class ManagerModule { }

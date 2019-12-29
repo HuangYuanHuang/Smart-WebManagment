@@ -26,7 +26,7 @@
                             <th>CommitId</th>
                             <th>UserID</th>
                             <th>标签</th>
-                          
+
                             <th>时间</th>
                             <th>备注</th>
 
@@ -59,9 +59,25 @@
                             <td>{{ role.description }}</td>
 
                             <td>
-                                <button class="action-button" mat-icon-button (click)="viewLibrary(role)">
-                                    <mat-icon>pageview</mat-icon>
+
+                                <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
+                                    <mat-icon>menu</mat-icon>
                                 </button>
+                                <mat-menu #actionsMenu="matMenu">
+                                    <button mat-menu-item (click)="viewLibrary(role)">
+                                        <mat-icon>pageview</mat-icon>
+                                        <span>{{ "View" | localize }}</span>
+                                    </button>
+                                    <button mat-menu-item (click)="libraryEvent(role)">
+                                        <mat-icon>restore</mat-icon>
+                                        <span>{{ "Record" | localize }}</span>
+                                    </button>
+                                    <button mat-menu-item (click)="share(role)">
+                                        <mat-icon>share</mat-icon>
+                                        <span>{{ "Export" | localize }}</span>
+                                    </button>
+                                </mat-menu>
+
 
                             </td>
                         </tr>
@@ -71,7 +87,9 @@
                     <abp-pagination-controls (pageChange)="getDataPage($event)" id="server">
                     </abp-pagination-controls>
                 </div>
-
+                <button mat-mini-fab color="primary" class="pull-right" (click)="import()">
+                    <mat-icon>add</mat-icon>
+                </button>
             </div>
         </div>
     </div>
