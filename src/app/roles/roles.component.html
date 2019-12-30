@@ -65,11 +65,11 @@
                                     <mat-icon>menu</mat-icon>
                                 </button>
                                 <mat-menu #actionsMenu="matMenu">
-                                    <button mat-menu-item (click)="editRole(role)">
+                                    <button mat-menu-item (click)="editRole(role)" *ngIf="isGranted('Web.Pages.Roles.Edit')">
                                         <mat-icon>edit</mat-icon>
                                         <span>{{ "Edit" | localize }}</span>
                                     </button>
-                                    <button mat-menu-item (click)="delete(role)">
+                                    <button mat-menu-item (click)="delete(role)" *ngIf="isGranted('Web.Pages.Roles.Delete')">
                                         <mat-icon>delete</mat-icon>
                                         <span>{{ "Delete" | localize }}</span>
                                     </button>
@@ -82,7 +82,7 @@
                     <abp-pagination-controls (pageChange)="getDataPage($event)" id="server">
                     </abp-pagination-controls>
                 </div>
-                <button mat-mini-fab color="primary" class="pull-right" (click)="createRole()">
+                <button mat-mini-fab color="primary" class="pull-right" (click)="createRole()" *ngIf="isGranted('Web.Pages.Roles.Add')">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>

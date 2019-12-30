@@ -17,9 +17,9 @@ import { LayoutComponent } from 'layout/layout.component';
                 component: LayoutComponent,
                 children: [
                     { path: 'home', component: HomeComponent, canActivate: [AppRouteGuard] },
-                    { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
-                    { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
-                    { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
+                    { path: 'users', component: UsersComponent, data: { permission: 'Web.Pages.Users' }, canActivate: [AppRouteGuard] },
+                    { path: 'roles', component: RolesComponent, data: { permission: 'Web.Pages.Roles' }, canActivate: [AppRouteGuard] },
+                    { path: 'tenants', component: TenantsComponent, data: { permission: 'Web.Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent }
                 ]
             }
