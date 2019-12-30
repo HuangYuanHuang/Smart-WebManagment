@@ -78,19 +78,31 @@
                             <td>{{ role.creationTime | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm' }}</td>
 
                             <td>
-                                <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
-                                    <mat-icon>menu</mat-icon>
-                                </button>
-                                <mat-menu #actionsMenu="matMenu">
-                                    <button mat-menu-item (click)="editProduct(role)">
-                                        <mat-icon>edit</mat-icon>
-                                        <span>{{ "Edit" | localize }}</span>
+                                <ng-template
+                                    [ngIf]="isGranted('Web.Manager.Products.Edit')||isGranted('Web.Manager.Products.Delete')">
+                                    <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
+                                        <mat-icon>menu</mat-icon>
                                     </button>
-                                    <button mat-menu-item (click)="delete(role)">
-                                        <mat-icon>delete</mat-icon>
-                                        <span>{{ "Delete" | localize }}</span>
+                                    <mat-menu #actionsMenu="matMenu">
+                                        <button mat-menu-item (click)="editProduct(role)"
+                                            *ngIf="isGranted('Web.Manager.Products.Edit')">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>{{ "Edit" | localize }}</span>
+                                        </button>
+                                        <button mat-menu-item (click)="delete(role)"
+                                            *ngIf="isGranted('Web.Manager.Products.Delete')">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>{{ "Delete" | localize }}</span>
+                                        </button>
+                                    </mat-menu>
+                                </ng-template>
+                                <ng-template
+                                    [ngIf]="!(isGranted('Web.Manager.Products.Edit')||isGranted('Web.Manager.Products.Delete'))">
+                                    <button class="action-button" mat-icon-button>
+                                        <mat-icon>adjust</mat-icon>
                                     </button>
-                                </mat-menu>
+
+                                </ng-template>
                             </td>
                         </tr>
                     </tbody>
@@ -99,7 +111,8 @@
                     <abp-pagination-controls (pageChange)="getDataPage($event)" id="server">
                     </abp-pagination-controls>
                 </div>
-                <button mat-mini-fab color="primary" class="pull-right" (click)="createProduct()">
+                <button mat-mini-fab color="primary" class="pull-right" (click)="createProduct()"
+                    *ngIf="isGranted('Web.Manager.Products.Add')">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>

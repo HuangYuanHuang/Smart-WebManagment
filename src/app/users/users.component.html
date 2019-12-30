@@ -21,7 +21,7 @@
             <div class="body table-responsive">
                 <!--query start-->
                 <div class="row clearfix">
-                    <form  class="p-l-10">
+                    <form class="p-l-10">
                         <div class="row">
                             <div class="col-md-4">
                                 <mat-form-field>
@@ -80,23 +80,37 @@
                                 </i>
                             </td>
                             <td>
-                                <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
-                                    <mat-icon>menu</mat-icon>
-                                </button>
-                                <mat-menu #actionsMenu="matMenu">
-                                    <button mat-menu-item (click)="editUser(user)">
-                                        <mat-icon>edit</mat-icon>
-                                        <span>{{ "Edit" | localize }}</span>
+                                <ng-template
+                                    [ngIf]="isGranted('Web.Pages.Users.Edit')||isGranted('Web.Pages.Users.Delete')">
+
+                                    <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
+                                        <mat-icon>menu</mat-icon>
                                     </button>
-                                    <button mat-menu-item (click)="delete(user)">
-                                        <mat-icon>delete</mat-icon>
-                                        <span>{{ "Delete" | localize }}</span>
+                                    <mat-menu #actionsMenu="matMenu">
+                                        <button mat-menu-item (click)="editUser(user)"
+                                            *ngIf="isGranted('Web.Pages.Users.Edit')">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>{{ "Edit" | localize }}</span>
+                                        </button>
+                                        <button mat-menu-item (click)="delete(user)"
+                                            *ngIf="isGranted('Web.Pages.Users.Delete')">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>{{ "Delete" | localize }}</span>
+                                        </button>
+                                        <button mat-menu-item (click)="resetPassword(user)"
+                                            *ngIf="isGranted('Web.Pages.Users.Edit')">
+                                            <mat-icon>lock</mat-icon>
+                                            <span>{{ "ResetPassword" | localize }}</span>
+                                        </button>
+                                    </mat-menu>
+                                </ng-template>
+                                <ng-template
+                                    [ngIf]="!(isGranted('Web.Pages.Users.Edit')||isGranted('Web.Pages.Users.Delete'))">
+                                    <button class="action-button" mat-icon-button>
+                                        <mat-icon>adjust</mat-icon>
                                     </button>
-                                    <button mat-menu-item (click)="resetPassword(user)">
-                                        <mat-icon>lock</mat-icon>
-                                        <span>{{ "ResetPassword" | localize }}</span>
-                                    </button>
-                                </mat-menu>
+
+                                </ng-template>
                             </td>
                         </tr>
                     </tbody>
@@ -105,7 +119,8 @@
                     <abp-pagination-controls (pageChange)="getDataPage($event)" id="server">
                     </abp-pagination-controls>
                 </div>
-                <button mat-mini-fab color="primary" class="pull-right" (click)="createUser()">
+                <button mat-mini-fab color="primary" class="pull-right" (click)="createUser()"
+                    *ngIf="isGranted('Web.Pages.Users.Add')">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, Injector } from '@angular/core';
 import { MaterialServiceProxy, MeterialGroupThicknessDto, ThicknessItem } from '@shared/service-proxies/service-proxies';
 import { LibraryServiceProxy } from './library-proxy';
 import { MatSelectChange } from '@angular/material';
@@ -7,13 +7,14 @@ import { CuttingLibraryComponent } from './cutting-library/cutting-library.compo
 import { PiercingLibraryComponent } from './piercing-library/piercing-library.component';
 import { EdgeLibraryComponent } from './edge-library/edge-library.component';
 import { SlopeLibraryComponent } from './slope-library/slope-library.component';
+import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
   selector: 'app-view-library',
   templateUrl: './view-library.component.html',
   styleUrls: ['./view-library.component.css']
 })
-export class ViewLibraryComponent implements OnInit {
+export class ViewLibraryComponent extends AppComponentBase implements OnInit {
   @ViewChild('cuttinglibrary', { static: true }) cuttinglibrary: CuttingLibraryComponent;
   @ViewChild('piercinglibrary', { static: true }) piercinglibrary: PiercingLibraryComponent;
   @ViewChild('edgelibrary', { static: true }) edgelibrary: EdgeLibraryComponent;
@@ -21,7 +22,7 @@ export class ViewLibraryComponent implements OnInit {
 
   @Input('icon') icon = 'add';
   @Input('title') title = '备份';
-
+  @Input('auth') auth = 'Web.Manager.Librarys.Record';
   @Output() libraryEvent: EventEmitter<any> = new EventEmitter<any>();
   private thickness: ThicknessItem[];
   private serviceProxy: LibraryServiceProxy;
@@ -31,7 +32,10 @@ export class ViewLibraryComponent implements OnInit {
   private commit: string;
   private skipCount = 0;
   private maxCount = 10;
-  constructor() { }
+  constructor(injector: Injector) {
+    super(injector);
+
+  }
 
   ngOnInit() {
   }

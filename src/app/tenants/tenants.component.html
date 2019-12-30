@@ -38,7 +38,8 @@
               </div>
 
               <div class="col-md-4 text-left p-l-25">
-                <button mat-raised-button color="primary" style="margin-top: 10px;" (click)="getDataPage(1)">{{ 'Search' | localize }}</button>
+                <button mat-raised-button color="primary" style="margin-top: 10px;"
+                  (click)="getDataPage(1)">{{ 'Search' | localize }}</button>
               </div>
             </div>
           </form>
@@ -77,19 +78,29 @@
                 </i>
               </td>
               <td>
-                <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
-                  <mat-icon>menu</mat-icon>
-                </button>
-                <mat-menu #actionsMenu="matMenu">
-                  <button mat-menu-item (click)="editTenant(tenant)">
-                    <mat-icon>edit</mat-icon>
-                    <span>{{ "Edit" | localize }}</span>
+                <ng-template [ngIf]="isGranted('Web.Pages.Tenants.Edit')||isGranted('Web.Pages.Tenants.Delete')">
+                  <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
+                    <mat-icon>menu</mat-icon>
                   </button>
-                  <button mat-menu-item (click)="delete(tenant)">
-                    <mat-icon>delete</mat-icon>
-                    <span>{{ "Delete" | localize }}</span>
+                  <mat-menu #actionsMenu="matMenu">
+                    <button mat-menu-item (click)="editTenant(tenant)" *ngIf="isGranted('Web.Pages.Tenants.Edit')">
+                      <mat-icon>edit</mat-icon>
+                      <span>{{ "Edit" | localize }}</span>
+                    </button>
+                    <button mat-menu-item (click)="delete(tenant)" *ngIf="isGranted('Web.Pages.Tenants.Delete')">
+                      <mat-icon>delete</mat-icon>
+                      <span>{{ "Delete" | localize }}</span>
+                    </button>
+                  </mat-menu>
+                </ng-template>
+
+
+                <ng-template [ngIf]="!(isGranted('Web.Pages.Tenants.Edit')||isGranted('Web.Pages.Tenants.Delete'))">
+                  <button class="action-button" mat-icon-button>
+                    <mat-icon>adjust</mat-icon>
                   </button>
-                </mat-menu>
+
+                </ng-template>
               </td>
             </tr>
           </tbody>
@@ -98,7 +109,7 @@
           <abp-pagination-controls (pageChange)="getDataPage($event)" id="server">
           </abp-pagination-controls>
         </div>
-        <button mat-mini-fab color="primary" class="pull-right" (click)="createTenant()">
+        <button mat-mini-fab color="primary" class="pull-right" (click)="createTenant()" *ngIf="isGranted('Web.Pages.Tenants.Add')">
           <mat-icon>add</mat-icon>
         </button>
       </div>

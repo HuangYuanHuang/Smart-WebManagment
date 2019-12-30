@@ -68,11 +68,13 @@
                                         <mat-icon>pageview</mat-icon>
                                         <span>{{ "View" | localize }}</span>
                                     </button>
-                                    <button mat-menu-item (click)="libraryEvent(role)">
+                                    <button mat-menu-item (click)="libraryEvent(role)"
+                                        *ngIf="isGranted('Web.Manager.Records.Record')">
                                         <mat-icon>restore</mat-icon>
                                         <span>{{ "Record" | localize }}</span>
                                     </button>
-                                    <button mat-menu-item (click)="share(role)">
+                                    <button mat-menu-item (click)="share(role)"
+                                        *ngIf="isGranted('Web.Manager.Records.Export')">
                                         <mat-icon>share</mat-icon>
                                         <span>{{ "Export" | localize }}</span>
                                     </button>
@@ -87,7 +89,8 @@
                     <abp-pagination-controls (pageChange)="getDataPage($event)" id="server">
                     </abp-pagination-controls>
                 </div>
-                <button mat-mini-fab color="primary" class="pull-right" (click)="import()">
+                <button mat-mini-fab color="primary" class="pull-right" (click)="import()"
+                    *ngIf="isGranted('Web.Manager.Records.Import')">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>

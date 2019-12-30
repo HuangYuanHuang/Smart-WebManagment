@@ -27,7 +27,7 @@
             </div>
 
             <div class="col-md-2 text-left p-l-25">
-                <button mat-raised-button color="primary" (click)="opeartionClick()">
+                <button mat-raised-button color="primary" (click)="opeartionClick()" *ngIf="isGranted(auth)">
                     <mat-icon>{{icon}}</mat-icon>{{title}}
                 </button>
             </div>

@@ -2,7 +2,8 @@
 <mat-dialog-content style="width:1570px;height:800px;">
     <div class="body table-responsive">
 
-        <app-view-library #viewlibrary (libraryEvent)="libraryEvent($event)" [icon]="'restore'" [title]="'还原'">
+        <app-view-library #viewlibrary (libraryEvent)="libraryEvent($event)" [icon]="'restore'" [title]="'还原'"
+            [auth]="'Web.Manager.Records.Record'">
         </app-view-library>
     </div>
 
