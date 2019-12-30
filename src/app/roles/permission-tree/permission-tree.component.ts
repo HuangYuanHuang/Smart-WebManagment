@@ -26,6 +26,7 @@ export class PermissionTreeComponent implements OnInit {
   private getChildren = (node: PreesionTreeNode): PreesionTreeNode[] => node.children;
   private hasChild = (_: number, node: PreesionItemFlatNode) => node.expandable;
   isStatic = false;
+  private checkNodes: PreesionItemFlatNode[];
   constructor() {
   }
 
@@ -36,7 +37,25 @@ export class PermissionTreeComponent implements OnInit {
   }
 
   getCheckListSelection() {
-    return this.checklistSelection.selected;
+    this.checkNodes = [];
+    _.map(this.checklistSelection.selected, (item, index) => {
+      this.getCheckParentNode(item);
+    });
+
+    return this.checkNodes;
+  }
+  private getCheckParentNode(node: PreesionItemFlatNode) {
+    if (!node) {
+      return;
+    }
+    const find = _.filter(this.checkNodes, (item) => item.key == node.key);
+    if (!find || find.length == 0) {
+      this.checkNodes.push(node);
+    }
+    const parent = this.getParentNode(node);
+    if (parent != null) {
+      this.getCheckParentNode(parent);
+    }
   }
 
   grantedPermission(grantedPermissionNames: string[], isStatic: boolean) {
