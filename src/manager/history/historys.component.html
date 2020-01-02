@@ -24,16 +24,31 @@
                     <form class="p-l-25">
 
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <mat-form-field>
-                                    <input matInput [placeholder]="l('Module')" [(ngModel)]="query.module"
+                                    <mat-select [placeholder]="'日志类型'" [(ngModel)]="query.type" name="type" (selectionChange)="getDataPage(1)">
+                                        <mat-option value="">{{ 'All' | localize }}</mat-option>
+                                        <mat-option value="Auto">{{ 'Auto' | localize }}</mat-option>
+                                        <mat-option value="API">{{ 'API' | localize }}</mat-option>
+                                        <mat-option value="Navigate">{{ 'Navigate' | localize }}</mat-option>
+                                        <mat-option value="Operation">{{ 'Operation' | localize }}</mat-option>
+                                        <mat-option value="ProgramEdit">{{ 'ProgramEdit' | localize }}</mat-option>
+                                        <mat-option value="UserLogin">{{ 'UserLogin' | localize }}</mat-option>
+
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <input matInput [placeholder]="'模块'" [(ngModel)]="query.module"
                                         name="keyword">
                                 </mat-form-field>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <mat-form-field>
                                     <input matInput [matDatepicker]="dp3" (dateChange)="dateChange($event)"
-                                        placeholder="CreationTime" >
+                                        placeholder="时间">
                                     <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                                     <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                                 </mat-form-field>
@@ -43,12 +58,12 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <mat-form-field>
-                                    <input matInput [placeholder]="l('Page')" [(ngModel)]="query.page" name="page">
+                                    <input matInput [placeholder]="'页面'" [(ngModel)]="query.page" name="page">
                                 </mat-form-field>
                             </div>
                             <div class="col-md-4">
                                 <mat-form-field>
-                                    <input matInput [placeholder]="l('Method')" [(ngModel)]="query.method"
+                                    <input matInput [placeholder]="'方法'" [(ngModel)]="query.method"
                                         name="method">
                                 </mat-form-field>
                             </div>
@@ -60,46 +75,116 @@
                     </form>
                 </div>
                 <!--query end-->
-                <table class="table table-hover table-striped" [busy]="isTableLoading">
-                    <thead>
-                        <tr>
-                            <th>UserId</th>
-                            <th>Module</th>
-                            <th>Page</th>
-                            <th>Method</th>
-                            <th>Parameters</th>
-                            <th>customData</th>
-                            <th>CreationTime</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="
-                let role of (historyNodes
-                  | paginate
-                    : {
-                        id: 'server',
-                        itemsPerPage: pageSize,
-                        currentPage: pageNumber,
-                        totalItems: totalItems
-                      })
-              ">
-                            <td>
-                                <span class="label label-info"> {{role.userId}}</span>
-
-                            </td>
-                            <td>{{ role.moduleName }}</td>
-
-                            <td>{{ role.pageName }}</td>
-                            <td>{{ role.methodName }}</td>
-
-                            <td>{{ role.parameters }}</td>
-                            <td>{{ role.customData }}</td>
-
-                            <td>{{ role.creationTime | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</td>
 
 
-                        </tr>
-                    </tbody>
+
+
+
+                <table mat-table
+                    [dataSource]="historyNodes | paginate : {  id: 'server', itemsPerPage: pageSize,currentPage: pageNumber,totalItems: totalItems }"
+                    multiTemplateDataRows class="" [busy]="isTableLoading">
+
+
+
+                    <ng-container matColumnDef="serviceName">
+                        <th mat-header-cell *matHeaderCellDef> 日志类型 </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="label label-primary"
+                                *ngIf="element.serviceName=='Navigate'">{{element.serviceName}}</span>
+                            <span class="label label-default"
+                                *ngIf="element.serviceName=='Auto'">{{element.serviceName}}</span>
+                            <span class="label label-warning"
+                                *ngIf="element.serviceName=='Operation'">{{element.serviceName}}</span>
+                            <span class="label label-success "
+                                *ngIf="element.serviceName=='UserLogin'">{{element.serviceName}}</span>
+                            <span class="label bg-purple"
+                                *ngIf="element.serviceName=='ProgramEdit'">{{element.serviceName}}</span>
+                            <span class="label bg-brown"
+                                *ngIf="element.serviceName=='API'">{{element.serviceName}}</span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="moduleName">
+                        <th mat-header-cell *matHeaderCellDef> 模块 </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.moduleName.split(',')[0]}}
+
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="pageName">
+                        <th mat-header-cell *matHeaderCellDef> 页面 </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.pageName.split('.')[element.pageName.split('.').length-1]}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="methodName">
+                        <th mat-header-cell *matHeaderCellDef> 方法 </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.methodName}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="userId">
+                        <th mat-header-cell *matHeaderCellDef> UserID </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="label label-info"> {{element.userId}}</span>
+
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="executionDuration">
+                        <th mat-header-cell *matHeaderCellDef> 执行时间 </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="label label-info"> {{element.executionDuration}}</span>
+
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="creationTime">
+                        <th mat-header-cell *matHeaderCellDef> 时间 </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.creationTime | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm:ss'}}
+                        </td>
+                    </ng-container>
+
+
+
+                    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                    <ng-container matColumnDef="expandedDetail">
+                        <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                            <div class="example-element-detail"
+                                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+
+                                <mat-list>
+                                    <mat-list-item> <span class="label bg-black"> browserInfo</span>
+                                        &nbsp;&nbsp; {{element.browserInfo}} {{element.clientIpAddress}}</mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item *ngIf="element.parameters"> <span class="label bg-black">
+                                            parameters</span>
+                                        &nbsp;&nbsp; {{element.parameters}}
+                                    </mat-list-item>
+                                    <mat-divider *ngIf="element.parameters"></mat-divider>
+                                    <mat-list-item><span class="label bg-black"> customData</span>
+                                        &nbsp;&nbsp; {{element.customData}}</mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item *ngIf="element.returnValue"><span class="label bg-black">
+                                            returnValue</span>
+                                        &nbsp;&nbsp; {{element.returnValue}}</mat-list-item>
+                                    <mat-divider *ngIf="element.returnValue"></mat-divider>
+                                    <mat-list-item><span class="label bg-black"> moduleName</span>
+                                        &nbsp;&nbsp; {{element.moduleName}}</mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item><span class="label bg-black"> pageName</span>
+                                        &nbsp;&nbsp; {{element.pageName}}</mat-list-item>
+                                </mat-list>
+
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+                        [class.example-expanded-row]="expandedElement === element"
+                        (click)="expandedElement = expandedElement === element ? null : element">
+                    </tr>
+                    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                 </table>
                 <div class="abp-pagination-controls-wrapper" *ngIf="totalItems > pageSize">
                     <abp-pagination-controls (pageChange)="getDataPage($event)" id="server">

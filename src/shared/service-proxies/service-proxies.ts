@@ -2439,6 +2439,62 @@ export class LibraryHistoryServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    importLibrary(body: ImportLibraryDto | undefined): Observable<LibraryBackupHistoryDto> {
+        let url_ = this.baseUrl + "/api/services/app/LibraryHistory/ImportLibrary";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json", 
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processImportLibrary(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processImportLibrary(<any>response_);
+                } catch (e) {
+                    return <Observable<LibraryBackupHistoryDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<LibraryBackupHistoryDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processImportLibrary(response: HttpResponseBase): Observable<LibraryBackupHistoryDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = LibraryBackupHistoryDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<LibraryBackupHistoryDto>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -5576,6 +5632,7 @@ export class OperationLogServiceProxy {
     }
 
     /**
+     * @param type (optional) 
      * @param module (optional) 
      * @param page (optional) 
      * @param method (optional) 
@@ -5585,8 +5642,12 @@ export class OperationLogServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(module: string | undefined, page: string | undefined, method: string | undefined, date: string | undefined, userId: number | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<OperationLogDtoPagedResultDto> {
+    getAll(type: string | undefined, module: string | undefined, page: string | undefined, method: string | undefined, date: string | undefined, userId: number | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<OperationLogDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/OperationLog/GetAll?";
+        if (type === null)
+            throw new Error("The parameter 'type' cannot be null.");
+        else if (type !== undefined)
+            url_ += "Type=" + encodeURIComponent("" + type) + "&"; 
         if (module === null)
             throw new Error("The parameter 'module' cannot be null.");
         else if (module !== undefined)
@@ -10946,6 +11007,517 @@ export interface ILibraryBackupHistoryDto {
     id: string | undefined;
 }
 
+export class SlopeControlDataDto implements ISlopeControlDataDto {
+    machiningDataGroupId: string | undefined;
+    machiningKindName: string | undefined;
+    materialThickness: number;
+    materialName: string | undefined;
+    nozzleKindName: string | undefined;
+    eNo: number;
+    machiningKindCode: number;
+    nozzleKindCode: number;
+    nozzleDiameter: number;
+    feedrate: number;
+    power: number;
+    frequency: number;
+    duty: number;
+    standardDisplacement: number;
+    supple: number;
+    edgeSlt: number;
+    apprSlt: number;
+    pwrCtrl: number;
+    standardDisplacement2: number;
+    gapAxis: string;
+    beamSpot: number;
+    focalPosition: number;
+    liftDistance: number;
+    pbPower: number;
+    id: number;
+
+    constructor(data?: ISlopeControlDataDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.machiningDataGroupId = _data["machiningDataGroupId"];
+            this.machiningKindName = _data["machiningKindName"];
+            this.materialThickness = _data["materialThickness"];
+            this.materialName = _data["materialName"];
+            this.nozzleKindName = _data["nozzleKindName"];
+            this.eNo = _data["eNo"];
+            this.machiningKindCode = _data["machiningKindCode"];
+            this.nozzleKindCode = _data["nozzleKindCode"];
+            this.nozzleDiameter = _data["nozzleDiameter"];
+            this.feedrate = _data["feedrate"];
+            this.power = _data["power"];
+            this.frequency = _data["frequency"];
+            this.duty = _data["duty"];
+            this.standardDisplacement = _data["standardDisplacement"];
+            this.supple = _data["supple"];
+            this.edgeSlt = _data["edgeSlt"];
+            this.apprSlt = _data["apprSlt"];
+            this.pwrCtrl = _data["pwrCtrl"];
+            this.standardDisplacement2 = _data["standardDisplacement2"];
+            this.gapAxis = _data["gapAxis"];
+            this.beamSpot = _data["beamSpot"];
+            this.focalPosition = _data["focalPosition"];
+            this.liftDistance = _data["liftDistance"];
+            this.pbPower = _data["pbPower"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): SlopeControlDataDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SlopeControlDataDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["machiningDataGroupId"] = this.machiningDataGroupId;
+        data["machiningKindName"] = this.machiningKindName;
+        data["materialThickness"] = this.materialThickness;
+        data["materialName"] = this.materialName;
+        data["nozzleKindName"] = this.nozzleKindName;
+        data["eNo"] = this.eNo;
+        data["machiningKindCode"] = this.machiningKindCode;
+        data["nozzleKindCode"] = this.nozzleKindCode;
+        data["nozzleDiameter"] = this.nozzleDiameter;
+        data["feedrate"] = this.feedrate;
+        data["power"] = this.power;
+        data["frequency"] = this.frequency;
+        data["duty"] = this.duty;
+        data["standardDisplacement"] = this.standardDisplacement;
+        data["supple"] = this.supple;
+        data["edgeSlt"] = this.edgeSlt;
+        data["apprSlt"] = this.apprSlt;
+        data["pwrCtrl"] = this.pwrCtrl;
+        data["standardDisplacement2"] = this.standardDisplacement2;
+        data["gapAxis"] = this.gapAxis;
+        data["beamSpot"] = this.beamSpot;
+        data["focalPosition"] = this.focalPosition;
+        data["liftDistance"] = this.liftDistance;
+        data["pbPower"] = this.pbPower;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): SlopeControlDataDto {
+        const json = this.toJSON();
+        let result = new SlopeControlDataDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISlopeControlDataDto {
+    machiningDataGroupId: string | undefined;
+    machiningKindName: string | undefined;
+    materialThickness: number;
+    materialName: string | undefined;
+    nozzleKindName: string | undefined;
+    eNo: number;
+    machiningKindCode: number;
+    nozzleKindCode: number;
+    nozzleDiameter: number;
+    feedrate: number;
+    power: number;
+    frequency: number;
+    duty: number;
+    standardDisplacement: number;
+    supple: number;
+    edgeSlt: number;
+    apprSlt: number;
+    pwrCtrl: number;
+    standardDisplacement2: number;
+    gapAxis: string;
+    beamSpot: number;
+    focalPosition: number;
+    liftDistance: number;
+    pbPower: number;
+    id: number;
+}
+
+export class ThicknessItem implements IThicknessItem {
+    id: string | undefined;
+    thickness: number;
+
+    constructor(data?: IThicknessItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.thickness = _data["thickness"];
+        }
+    }
+
+    static fromJS(data: any): ThicknessItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new ThicknessItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["thickness"] = this.thickness;
+        return data; 
+    }
+
+    clone(): ThicknessItem {
+        const json = this.toJSON();
+        let result = new ThicknessItem();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IThicknessItem {
+    id: string | undefined;
+    thickness: number;
+}
+
+export class MeterialGroupThicknessDto implements IMeterialGroupThicknessDto {
+    code: number;
+    materialCode: number;
+    name_EN: string | undefined;
+    name_CN: string | undefined;
+    thicknessNodes: ThicknessItem[] | undefined;
+
+    constructor(data?: IMeterialGroupThicknessDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.code = _data["code"];
+            this.materialCode = _data["materialCode"];
+            this.name_EN = _data["name_EN"];
+            this.name_CN = _data["name_CN"];
+            if (Array.isArray(_data["thicknessNodes"])) {
+                this.thicknessNodes = [] as any;
+                for (let item of _data["thicknessNodes"])
+                    this.thicknessNodes.push(ThicknessItem.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): MeterialGroupThicknessDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MeterialGroupThicknessDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["code"] = this.code;
+        data["materialCode"] = this.materialCode;
+        data["name_EN"] = this.name_EN;
+        data["name_CN"] = this.name_CN;
+        if (Array.isArray(this.thicknessNodes)) {
+            data["thicknessNodes"] = [];
+            for (let item of this.thicknessNodes)
+                data["thicknessNodes"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): MeterialGroupThicknessDto {
+        const json = this.toJSON();
+        let result = new MeterialGroupThicknessDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMeterialGroupThicknessDto {
+    code: number;
+    materialCode: number;
+    name_EN: string | undefined;
+    name_CN: string | undefined;
+    thicknessNodes: ThicknessItem[] | undefined;
+}
+
+export class PiercingDataDto implements IPiercingDataDto {
+    machiningDataGroupId: string | undefined;
+    machiningKindName: string | undefined;
+    materialThickness: number;
+    materialName: string | undefined;
+    gasName: string | undefined;
+    nozzleKindName: string | undefined;
+    eNo: number;
+    machiningKindCode: number;
+    nozzleKindCode: number;
+    nozzleDiameter: number;
+    power: number;
+    frequency: number;
+    duty: number;
+    stepFrequency: number;
+    stepDuty: number;
+    stepTime: number;
+    stepQuantity: number;
+    piercingTime: number;
+    gasPressure: number;
+    gasCode: number;
+    gasSettingTime: number;
+    standardDisplacement: number;
+    standardDisplacement2: number;
+    gapAxis: string;
+    beamSpot: number;
+    focalPosition: number;
+    liftDistance: number;
+    pbPower: number;
+    id: number;
+
+    constructor(data?: IPiercingDataDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.machiningDataGroupId = _data["machiningDataGroupId"];
+            this.machiningKindName = _data["machiningKindName"];
+            this.materialThickness = _data["materialThickness"];
+            this.materialName = _data["materialName"];
+            this.gasName = _data["gasName"];
+            this.nozzleKindName = _data["nozzleKindName"];
+            this.eNo = _data["eNo"];
+            this.machiningKindCode = _data["machiningKindCode"];
+            this.nozzleKindCode = _data["nozzleKindCode"];
+            this.nozzleDiameter = _data["nozzleDiameter"];
+            this.power = _data["power"];
+            this.frequency = _data["frequency"];
+            this.duty = _data["duty"];
+            this.stepFrequency = _data["stepFrequency"];
+            this.stepDuty = _data["stepDuty"];
+            this.stepTime = _data["stepTime"];
+            this.stepQuantity = _data["stepQuantity"];
+            this.piercingTime = _data["piercingTime"];
+            this.gasPressure = _data["gasPressure"];
+            this.gasCode = _data["gasCode"];
+            this.gasSettingTime = _data["gasSettingTime"];
+            this.standardDisplacement = _data["standardDisplacement"];
+            this.standardDisplacement2 = _data["standardDisplacement2"];
+            this.gapAxis = _data["gapAxis"];
+            this.beamSpot = _data["beamSpot"];
+            this.focalPosition = _data["focalPosition"];
+            this.liftDistance = _data["liftDistance"];
+            this.pbPower = _data["pbPower"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): PiercingDataDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PiercingDataDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["machiningDataGroupId"] = this.machiningDataGroupId;
+        data["machiningKindName"] = this.machiningKindName;
+        data["materialThickness"] = this.materialThickness;
+        data["materialName"] = this.materialName;
+        data["gasName"] = this.gasName;
+        data["nozzleKindName"] = this.nozzleKindName;
+        data["eNo"] = this.eNo;
+        data["machiningKindCode"] = this.machiningKindCode;
+        data["nozzleKindCode"] = this.nozzleKindCode;
+        data["nozzleDiameter"] = this.nozzleDiameter;
+        data["power"] = this.power;
+        data["frequency"] = this.frequency;
+        data["duty"] = this.duty;
+        data["stepFrequency"] = this.stepFrequency;
+        data["stepDuty"] = this.stepDuty;
+        data["stepTime"] = this.stepTime;
+        data["stepQuantity"] = this.stepQuantity;
+        data["piercingTime"] = this.piercingTime;
+        data["gasPressure"] = this.gasPressure;
+        data["gasCode"] = this.gasCode;
+        data["gasSettingTime"] = this.gasSettingTime;
+        data["standardDisplacement"] = this.standardDisplacement;
+        data["standardDisplacement2"] = this.standardDisplacement2;
+        data["gapAxis"] = this.gapAxis;
+        data["beamSpot"] = this.beamSpot;
+        data["focalPosition"] = this.focalPosition;
+        data["liftDistance"] = this.liftDistance;
+        data["pbPower"] = this.pbPower;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): PiercingDataDto {
+        const json = this.toJSON();
+        let result = new PiercingDataDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPiercingDataDto {
+    machiningDataGroupId: string | undefined;
+    machiningKindName: string | undefined;
+    materialThickness: number;
+    materialName: string | undefined;
+    gasName: string | undefined;
+    nozzleKindName: string | undefined;
+    eNo: number;
+    machiningKindCode: number;
+    nozzleKindCode: number;
+    nozzleDiameter: number;
+    power: number;
+    frequency: number;
+    duty: number;
+    stepFrequency: number;
+    stepDuty: number;
+    stepTime: number;
+    stepQuantity: number;
+    piercingTime: number;
+    gasPressure: number;
+    gasCode: number;
+    gasSettingTime: number;
+    standardDisplacement: number;
+    standardDisplacement2: number;
+    gapAxis: string;
+    beamSpot: number;
+    focalPosition: number;
+    liftDistance: number;
+    pbPower: number;
+    id: number;
+}
+
+export class ImportLibraryDto implements IImportLibraryDto {
+    libraryDto: CreateLibraryBackupHistoryDto;
+    slopeControl: SlopeControlDataDto[] | undefined;
+    meterialGroupThickness: MeterialGroupThicknessDto[] | undefined;
+    cutting: CuttingDataDto[] | undefined;
+    edgeCutting: EdgeCuttingDataDto[] | undefined;
+    piercing: PiercingDataDto[] | undefined;
+
+    constructor(data?: IImportLibraryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.libraryDto = _data["libraryDto"] ? CreateLibraryBackupHistoryDto.fromJS(_data["libraryDto"]) : <any>undefined;
+            if (Array.isArray(_data["slopeControl"])) {
+                this.slopeControl = [] as any;
+                for (let item of _data["slopeControl"])
+                    this.slopeControl.push(SlopeControlDataDto.fromJS(item));
+            }
+            if (Array.isArray(_data["meterialGroupThickness"])) {
+                this.meterialGroupThickness = [] as any;
+                for (let item of _data["meterialGroupThickness"])
+                    this.meterialGroupThickness.push(MeterialGroupThicknessDto.fromJS(item));
+            }
+            if (Array.isArray(_data["cutting"])) {
+                this.cutting = [] as any;
+                for (let item of _data["cutting"])
+                    this.cutting.push(CuttingDataDto.fromJS(item));
+            }
+            if (Array.isArray(_data["edgeCutting"])) {
+                this.edgeCutting = [] as any;
+                for (let item of _data["edgeCutting"])
+                    this.edgeCutting.push(EdgeCuttingDataDto.fromJS(item));
+            }
+            if (Array.isArray(_data["piercing"])) {
+                this.piercing = [] as any;
+                for (let item of _data["piercing"])
+                    this.piercing.push(PiercingDataDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ImportLibraryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ImportLibraryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["libraryDto"] = this.libraryDto ? this.libraryDto.toJSON() : <any>undefined;
+        if (Array.isArray(this.slopeControl)) {
+            data["slopeControl"] = [];
+            for (let item of this.slopeControl)
+                data["slopeControl"].push(item.toJSON());
+        }
+        if (Array.isArray(this.meterialGroupThickness)) {
+            data["meterialGroupThickness"] = [];
+            for (let item of this.meterialGroupThickness)
+                data["meterialGroupThickness"].push(item.toJSON());
+        }
+        if (Array.isArray(this.cutting)) {
+            data["cutting"] = [];
+            for (let item of this.cutting)
+                data["cutting"].push(item.toJSON());
+        }
+        if (Array.isArray(this.edgeCutting)) {
+            data["edgeCutting"] = [];
+            for (let item of this.edgeCutting)
+                data["edgeCutting"].push(item.toJSON());
+        }
+        if (Array.isArray(this.piercing)) {
+            data["piercing"] = [];
+            for (let item of this.piercing)
+                data["piercing"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ImportLibraryDto {
+        const json = this.toJSON();
+        let result = new ImportLibraryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IImportLibraryDto {
+    libraryDto: CreateLibraryBackupHistoryDto;
+    slopeControl: SlopeControlDataDto[] | undefined;
+    meterialGroupThickness: MeterialGroupThicknessDto[] | undefined;
+    cutting: CuttingDataDto[] | undefined;
+    edgeCutting: EdgeCuttingDataDto[] | undefined;
+    piercing: PiercingDataDto[] | undefined;
+}
+
 export class LibraryBackupHistoryDtoPagedResultDto implements ILibraryBackupHistoryDtoPagedResultDto {
     totalCount: number;
     items: LibraryBackupHistoryDto[] | undefined;
@@ -11770,120 +12342,6 @@ export interface IUpdateMachiningKindDto {
     name_CN: string | undefined;
     description: string | undefined;
     id: number;
-}
-
-export class ThicknessItem implements IThicknessItem {
-    id: string | undefined;
-    thickness: number;
-
-    constructor(data?: IThicknessItem) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.thickness = _data["thickness"];
-        }
-    }
-
-    static fromJS(data: any): ThicknessItem {
-        data = typeof data === 'object' ? data : {};
-        let result = new ThicknessItem();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["thickness"] = this.thickness;
-        return data; 
-    }
-
-    clone(): ThicknessItem {
-        const json = this.toJSON();
-        let result = new ThicknessItem();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IThicknessItem {
-    id: string | undefined;
-    thickness: number;
-}
-
-export class MeterialGroupThicknessDto implements IMeterialGroupThicknessDto {
-    code: number;
-    materialCode: number;
-    name_EN: string | undefined;
-    name_CN: string | undefined;
-    thicknessNodes: ThicknessItem[] | undefined;
-
-    constructor(data?: IMeterialGroupThicknessDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.code = _data["code"];
-            this.materialCode = _data["materialCode"];
-            this.name_EN = _data["name_EN"];
-            this.name_CN = _data["name_CN"];
-            if (Array.isArray(_data["thicknessNodes"])) {
-                this.thicknessNodes = [] as any;
-                for (let item of _data["thicknessNodes"])
-                    this.thicknessNodes.push(ThicknessItem.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): MeterialGroupThicknessDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new MeterialGroupThicknessDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["code"] = this.code;
-        data["materialCode"] = this.materialCode;
-        data["name_EN"] = this.name_EN;
-        data["name_CN"] = this.name_CN;
-        if (Array.isArray(this.thicknessNodes)) {
-            data["thicknessNodes"] = [];
-            for (let item of this.thicknessNodes)
-                data["thicknessNodes"].push(item.toJSON());
-        }
-        return data; 
-    }
-
-    clone(): MeterialGroupThicknessDto {
-        const json = this.toJSON();
-        let result = new MeterialGroupThicknessDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IMeterialGroupThicknessDto {
-    code: number;
-    materialCode: number;
-    name_EN: string | undefined;
-    name_CN: string | undefined;
-    thicknessNodes: ThicknessItem[] | undefined;
 }
 
 export class MeterialGroupThicknessDtoPagedResultDto implements IMeterialGroupThicknessDtoPagedResultDto {
@@ -12783,161 +13241,6 @@ export class UpdatePiercingDataDto implements IUpdatePiercingDataDto {
 
 export interface IUpdatePiercingDataDto {
     machiningDataGroupId: number;
-    eNo: number;
-    machiningKindCode: number;
-    nozzleKindCode: number;
-    nozzleDiameter: number;
-    power: number;
-    frequency: number;
-    duty: number;
-    stepFrequency: number;
-    stepDuty: number;
-    stepTime: number;
-    stepQuantity: number;
-    piercingTime: number;
-    gasPressure: number;
-    gasCode: number;
-    gasSettingTime: number;
-    standardDisplacement: number;
-    standardDisplacement2: number;
-    gapAxis: string;
-    beamSpot: number;
-    focalPosition: number;
-    liftDistance: number;
-    pbPower: number;
-    id: number;
-}
-
-export class PiercingDataDto implements IPiercingDataDto {
-    machiningDataGroupId: string | undefined;
-    machiningKindName: string | undefined;
-    materialThickness: number;
-    materialName: string | undefined;
-    gasName: string | undefined;
-    nozzleKindName: string | undefined;
-    eNo: number;
-    machiningKindCode: number;
-    nozzleKindCode: number;
-    nozzleDiameter: number;
-    power: number;
-    frequency: number;
-    duty: number;
-    stepFrequency: number;
-    stepDuty: number;
-    stepTime: number;
-    stepQuantity: number;
-    piercingTime: number;
-    gasPressure: number;
-    gasCode: number;
-    gasSettingTime: number;
-    standardDisplacement: number;
-    standardDisplacement2: number;
-    gapAxis: string;
-    beamSpot: number;
-    focalPosition: number;
-    liftDistance: number;
-    pbPower: number;
-    id: number;
-
-    constructor(data?: IPiercingDataDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.machiningDataGroupId = _data["machiningDataGroupId"];
-            this.machiningKindName = _data["machiningKindName"];
-            this.materialThickness = _data["materialThickness"];
-            this.materialName = _data["materialName"];
-            this.gasName = _data["gasName"];
-            this.nozzleKindName = _data["nozzleKindName"];
-            this.eNo = _data["eNo"];
-            this.machiningKindCode = _data["machiningKindCode"];
-            this.nozzleKindCode = _data["nozzleKindCode"];
-            this.nozzleDiameter = _data["nozzleDiameter"];
-            this.power = _data["power"];
-            this.frequency = _data["frequency"];
-            this.duty = _data["duty"];
-            this.stepFrequency = _data["stepFrequency"];
-            this.stepDuty = _data["stepDuty"];
-            this.stepTime = _data["stepTime"];
-            this.stepQuantity = _data["stepQuantity"];
-            this.piercingTime = _data["piercingTime"];
-            this.gasPressure = _data["gasPressure"];
-            this.gasCode = _data["gasCode"];
-            this.gasSettingTime = _data["gasSettingTime"];
-            this.standardDisplacement = _data["standardDisplacement"];
-            this.standardDisplacement2 = _data["standardDisplacement2"];
-            this.gapAxis = _data["gapAxis"];
-            this.beamSpot = _data["beamSpot"];
-            this.focalPosition = _data["focalPosition"];
-            this.liftDistance = _data["liftDistance"];
-            this.pbPower = _data["pbPower"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): PiercingDataDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PiercingDataDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["machiningDataGroupId"] = this.machiningDataGroupId;
-        data["machiningKindName"] = this.machiningKindName;
-        data["materialThickness"] = this.materialThickness;
-        data["materialName"] = this.materialName;
-        data["gasName"] = this.gasName;
-        data["nozzleKindName"] = this.nozzleKindName;
-        data["eNo"] = this.eNo;
-        data["machiningKindCode"] = this.machiningKindCode;
-        data["nozzleKindCode"] = this.nozzleKindCode;
-        data["nozzleDiameter"] = this.nozzleDiameter;
-        data["power"] = this.power;
-        data["frequency"] = this.frequency;
-        data["duty"] = this.duty;
-        data["stepFrequency"] = this.stepFrequency;
-        data["stepDuty"] = this.stepDuty;
-        data["stepTime"] = this.stepTime;
-        data["stepQuantity"] = this.stepQuantity;
-        data["piercingTime"] = this.piercingTime;
-        data["gasPressure"] = this.gasPressure;
-        data["gasCode"] = this.gasCode;
-        data["gasSettingTime"] = this.gasSettingTime;
-        data["standardDisplacement"] = this.standardDisplacement;
-        data["standardDisplacement2"] = this.standardDisplacement2;
-        data["gapAxis"] = this.gapAxis;
-        data["beamSpot"] = this.beamSpot;
-        data["focalPosition"] = this.focalPosition;
-        data["liftDistance"] = this.liftDistance;
-        data["pbPower"] = this.pbPower;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): PiercingDataDto {
-        const json = this.toJSON();
-        let result = new PiercingDataDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPiercingDataDto {
-    machiningDataGroupId: string | undefined;
-    machiningKindName: string | undefined;
-    materialThickness: number;
-    materialName: string | undefined;
-    gasName: string | undefined;
-    nozzleKindName: string | undefined;
     eNo: number;
     machiningKindCode: number;
     nozzleKindCode: number;
@@ -14720,145 +15023,6 @@ export interface IUpdateSlopeControlDataDto {
     gasPressure: number;
     gasCode: number;
     gasSettingTime: number;
-    standardDisplacement: number;
-    supple: number;
-    edgeSlt: number;
-    apprSlt: number;
-    pwrCtrl: number;
-    standardDisplacement2: number;
-    gapAxis: string;
-    beamSpot: number;
-    focalPosition: number;
-    liftDistance: number;
-    pbPower: number;
-    id: number;
-}
-
-export class SlopeControlDataDto implements ISlopeControlDataDto {
-    machiningDataGroupId: string | undefined;
-    machiningKindName: string | undefined;
-    materialThickness: number;
-    materialName: string | undefined;
-    nozzleKindName: string | undefined;
-    eNo: number;
-    machiningKindCode: number;
-    nozzleKindCode: number;
-    nozzleDiameter: number;
-    feedrate: number;
-    power: number;
-    frequency: number;
-    duty: number;
-    standardDisplacement: number;
-    supple: number;
-    edgeSlt: number;
-    apprSlt: number;
-    pwrCtrl: number;
-    standardDisplacement2: number;
-    gapAxis: string;
-    beamSpot: number;
-    focalPosition: number;
-    liftDistance: number;
-    pbPower: number;
-    id: number;
-
-    constructor(data?: ISlopeControlDataDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.machiningDataGroupId = _data["machiningDataGroupId"];
-            this.machiningKindName = _data["machiningKindName"];
-            this.materialThickness = _data["materialThickness"];
-            this.materialName = _data["materialName"];
-            this.nozzleKindName = _data["nozzleKindName"];
-            this.eNo = _data["eNo"];
-            this.machiningKindCode = _data["machiningKindCode"];
-            this.nozzleKindCode = _data["nozzleKindCode"];
-            this.nozzleDiameter = _data["nozzleDiameter"];
-            this.feedrate = _data["feedrate"];
-            this.power = _data["power"];
-            this.frequency = _data["frequency"];
-            this.duty = _data["duty"];
-            this.standardDisplacement = _data["standardDisplacement"];
-            this.supple = _data["supple"];
-            this.edgeSlt = _data["edgeSlt"];
-            this.apprSlt = _data["apprSlt"];
-            this.pwrCtrl = _data["pwrCtrl"];
-            this.standardDisplacement2 = _data["standardDisplacement2"];
-            this.gapAxis = _data["gapAxis"];
-            this.beamSpot = _data["beamSpot"];
-            this.focalPosition = _data["focalPosition"];
-            this.liftDistance = _data["liftDistance"];
-            this.pbPower = _data["pbPower"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): SlopeControlDataDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SlopeControlDataDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["machiningDataGroupId"] = this.machiningDataGroupId;
-        data["machiningKindName"] = this.machiningKindName;
-        data["materialThickness"] = this.materialThickness;
-        data["materialName"] = this.materialName;
-        data["nozzleKindName"] = this.nozzleKindName;
-        data["eNo"] = this.eNo;
-        data["machiningKindCode"] = this.machiningKindCode;
-        data["nozzleKindCode"] = this.nozzleKindCode;
-        data["nozzleDiameter"] = this.nozzleDiameter;
-        data["feedrate"] = this.feedrate;
-        data["power"] = this.power;
-        data["frequency"] = this.frequency;
-        data["duty"] = this.duty;
-        data["standardDisplacement"] = this.standardDisplacement;
-        data["supple"] = this.supple;
-        data["edgeSlt"] = this.edgeSlt;
-        data["apprSlt"] = this.apprSlt;
-        data["pwrCtrl"] = this.pwrCtrl;
-        data["standardDisplacement2"] = this.standardDisplacement2;
-        data["gapAxis"] = this.gapAxis;
-        data["beamSpot"] = this.beamSpot;
-        data["focalPosition"] = this.focalPosition;
-        data["liftDistance"] = this.liftDistance;
-        data["pbPower"] = this.pbPower;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): SlopeControlDataDto {
-        const json = this.toJSON();
-        let result = new SlopeControlDataDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ISlopeControlDataDto {
-    machiningDataGroupId: string | undefined;
-    machiningKindName: string | undefined;
-    materialThickness: number;
-    materialName: string | undefined;
-    nozzleKindName: string | undefined;
-    eNo: number;
-    machiningKindCode: number;
-    nozzleKindCode: number;
-    nozzleDiameter: number;
-    feedrate: number;
-    power: number;
-    frequency: number;
-    duty: number;
     standardDisplacement: number;
     supple: number;
     edgeSlt: number;
