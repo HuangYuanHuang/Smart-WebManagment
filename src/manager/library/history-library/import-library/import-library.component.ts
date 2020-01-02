@@ -39,6 +39,11 @@ export class ImportLibraryComponent extends AppComponentBase
       headers: [{ name: 'contentType', value: 'multipart/form-data' }]
     });
     this.uploader.response.subscribe((res: any) => {
+      if (!res && res.length <= 0) {
+        this.notify.error('遇到错误，导入失败!');
+        this.saving = false;
+        return;
+      }
       var obj = JSON.parse(res);
 
       if (obj.result.status == 200) {
