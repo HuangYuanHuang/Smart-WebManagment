@@ -112,14 +112,24 @@
                     <ng-container matColumnDef="pageName">
                         <th mat-header-cell *matHeaderCellDef> 页面 </th>
                         <td mat-cell *matCellDef="let element">
-                            {{element.pageName.split('.')[element.pageName.split('.').length-1]}}
+                            <ng-template [ngIf]="element.pageName">
+                                {{element.pageName.split('.')[element.pageName.split('.').length-1]}}
+
+                            </ng-template>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="methodName">
                         <th mat-header-cell *matHeaderCellDef> 方法 </th>
                         <td mat-cell *matCellDef="let element">
-                            {{element.methodName}}
+                            <ng-template [ngIf]="element.returnValue">
+                                <span class="label label-danger"> {{element.methodName}}</span>
+
+                            </ng-template>
+                            <ng-template [ngIf]="!element.returnValue">
+                                {{element.methodName}}
+
+                            </ng-template>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="userId">
@@ -162,7 +172,8 @@
                                     <mat-divider *ngIf="element.parameters"></mat-divider>
                                     <mat-list-item>
                                         <span class="label bg-black"> customData </span>
-                                        &nbsp;&nbsp; <span class="label label-info">{{getDescription(element.customData)}}</span>
+                                        &nbsp;&nbsp; <span
+                                            class="label label-info">{{getDescription(element.customData)}}</span>
 
                                     </mat-list-item>
                                     <mat-divider></mat-divider>

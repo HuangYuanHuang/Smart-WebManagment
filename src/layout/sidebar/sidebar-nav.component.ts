@@ -16,7 +16,7 @@ export class SideBarNavComponent extends AppComponentBase {
         new MenuItem(this.l('Users'), 'Web.Pages.Users', 'people', '/app/users'),
         new MenuItem(this.l('Roles'), 'Web.Pages.Roles', 'local_offer', '/app/roles'),
         new MenuItem(this.l('Devices'), 'Web.Manager.Devies', 'assignment', '/le/device'),
-        new MenuItem(this.l('Products'), 'Web.Manager.Products', 'bookmarks', '/le/product'),
+        new MenuItem(this.l('Products'), 'Web.Manager.Products', 'web', '/le/product'),
 
         new MenuItem(this.l('Library'), 'Web.Manager.Librarys', 'line_weight', '/le/library'),
         new MenuItem(this.l('Record'), 'Web.Manager.Records', 'history', '/le/library-record'),

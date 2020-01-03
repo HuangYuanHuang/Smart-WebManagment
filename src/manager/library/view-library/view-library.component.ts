@@ -24,11 +24,11 @@ export class ViewLibraryComponent extends AppComponentBase implements OnInit {
   @Input('title') title = '备份';
   @Input('auth') auth = 'Web.Manager.Librarys.Record';
   @Output() libraryEvent: EventEmitter<any> = new EventEmitter<any>();
-  private thickness: ThicknessItem[];
+   thickness: ThicknessItem[];
   private serviceProxy: LibraryServiceProxy;
-  private selectedMeterial;
-  private selectedThickness;
-  private meterialNodes: MeterialGroupThicknessDto[];
+  selectedMeterial;
+  selectedThickness;
+  meterialNodes: MeterialGroupThicknessDto[];
   private commit: string;
   private skipCount = 0;
   private maxCount = 10;

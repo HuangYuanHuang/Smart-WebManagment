@@ -11,20 +11,20 @@ import * as _ from 'lodash';
   styleUrls: ['./permission-tree.component.css']
 })
 export class PermissionTreeComponent implements OnInit {
-  private treeNodes: PreesionTreeNode[] = [];
-  private nestedDataSource: MatTreeFlatDataSource<PreesionTreeNode, PreesionItemFlatNode>;
-  private flatNodeMap = new Map<PreesionItemFlatNode, PreesionTreeNode>();
-  private nestedNodeMap = new Map<PreesionTreeNode, PreesionItemFlatNode>();
-  private selectedParent: PreesionItemFlatNode | null = null;
-  private nestedTreeControl: FlatTreeControl<PreesionItemFlatNode>;
-  private checklistSelection = new SelectionModel<PreesionItemFlatNode>(true);
-  private treeFlattener: MatTreeFlattener<PreesionTreeNode, PreesionItemFlatNode>;
+  treeNodes: PreesionTreeNode[] = [];
+  nestedDataSource: MatTreeFlatDataSource<PreesionTreeNode, PreesionItemFlatNode>;
+  flatNodeMap = new Map<PreesionItemFlatNode, PreesionTreeNode>();
+  nestedNodeMap = new Map<PreesionTreeNode, PreesionItemFlatNode>();
+  selectedParent: PreesionItemFlatNode | null = null;
+  nestedTreeControl: FlatTreeControl<PreesionItemFlatNode>;
+  checklistSelection = new SelectionModel<PreesionItemFlatNode>(true);
+  treeFlattener: MatTreeFlattener<PreesionTreeNode, PreesionItemFlatNode>;
 
 
   private getLevel = (node: PreesionItemFlatNode) => node.level;
   private isExpandable = (node: PreesionItemFlatNode) => node.expandable;
   private getChildren = (node: PreesionTreeNode): PreesionTreeNode[] => node.children;
-  private hasChild = (_: number, node: PreesionItemFlatNode) => node.expandable;
+  hasChild = (_: number, node: PreesionItemFlatNode) => node.expandable;
   isStatic = false;
   private checkNodes: PreesionItemFlatNode[];
   constructor() {

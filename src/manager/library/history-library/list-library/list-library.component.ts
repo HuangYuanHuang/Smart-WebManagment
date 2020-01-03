@@ -27,7 +27,7 @@ export class ListLibraryComponent extends AppComponentBase implements OnInit, Li
     private slopeProxy: SlopeControlDataBackupServiceProxy,
     private _machineProxy: LibraryHistoryServiceProxy,
     private _dialogRef: MatDialogRef<ListLibraryComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) private _id: string
+    @Optional() @Inject(MAT_DIALOG_DATA) public _id: string
 
   ) {
     super(injector);
