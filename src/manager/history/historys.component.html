@@ -26,7 +26,8 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <mat-form-field>
-                                    <mat-select [placeholder]="'日志类型'" [(ngModel)]="query.type" name="type" (selectionChange)="getDataPage(1)">
+                                    <mat-select [placeholder]="'日志类型'" [(ngModel)]="query.type" name="type"
+                                        (selectionChange)="getDataPage(1)">
                                         <mat-option value="">{{ 'All' | localize }}</mat-option>
                                         <mat-option value="Auto">{{ 'Auto' | localize }}</mat-option>
                                         <mat-option value="API">{{ 'API' | localize }}</mat-option>
@@ -41,8 +42,7 @@
                             </div>
                             <div class="col-md-3">
                                 <mat-form-field>
-                                    <input matInput [placeholder]="'模块'" [(ngModel)]="query.module"
-                                        name="keyword">
+                                    <input matInput [placeholder]="'模块'" [(ngModel)]="query.module" name="keyword">
                                 </mat-form-field>
                             </div>
                             <div class="col-md-3">
@@ -63,8 +63,7 @@
                             </div>
                             <div class="col-md-4">
                                 <mat-form-field>
-                                    <input matInput [placeholder]="'方法'" [(ngModel)]="query.method"
-                                        name="method">
+                                    <input matInput [placeholder]="'方法'" [(ngModel)]="query.method" name="method">
                                 </mat-form-field>
                             </div>
                             <div class="col-md-4 text-left p-l-25">
@@ -161,8 +160,11 @@
                                         &nbsp;&nbsp; {{element.parameters}}
                                     </mat-list-item>
                                     <mat-divider *ngIf="element.parameters"></mat-divider>
-                                    <mat-list-item><span class="label bg-black"> customData</span>
-                                        &nbsp;&nbsp; {{element.customData}}</mat-list-item>
+                                    <mat-list-item>
+                                        <span class="label bg-black"> customData </span>
+                                        &nbsp;&nbsp; <span class="label label-info">{{getDescription(element.customData)}}</span>
+
+                                    </mat-list-item>
                                     <mat-divider></mat-divider>
                                     <mat-list-item *ngIf="element.returnValue"><span class="label bg-black">
                                             returnValue</span>

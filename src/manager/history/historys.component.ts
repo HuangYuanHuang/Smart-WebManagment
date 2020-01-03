@@ -44,7 +44,12 @@ export class HistorysComponent extends PagedListingComponentBase<OperationLogDto
     super(injector);
     this.query = new PagedOperationLogInfoRequestDto();
   }
-
+  getDescription(data: string) {
+    if (data && data.length > 200) {
+      return data.substring(0, 200)+".....";
+    }
+    return data;
+  }
   list(
     request: PagedOperationLogInfoRequestDto,
     pageNumber: number,
